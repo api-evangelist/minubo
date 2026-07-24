@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  title: Minubo Auth API
+  version: 1.0.0
+  description: "# Getting Started\n\nBase URL: `https://api.minubo.com`\n\nThis reference combines multiple service specifications into one API view, including Auth, ETL, and the Data API.\n\n## Requirements\n\nTo use the minubo API, you need to have a valid token ID and token secret. Those can be obtained from the minubo Application by navigating to [Settings -> API Credentials](https://app.minubo.com/#/settings/tenant/apicredentials).\n## Authentication\n\nCreate a JWT using `POST /auth/v1/token`:\n\n```bash\ncurl -X POST \"https://api.minubo.com/auth/v1/token\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"tokenId\":\"<token-id>\",\"tokenSecret\":\"<token-secret>\"}'\n```\n\nUse the returned token as a bearer token for protected endpoints.\n\n## Examples\n\n### Trigger ETL and check status\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\n# Trigger ETL process\nprocess_uuid = requests.post(\n    f\"{base}/etl/v1/process/start\",\n    headers=headers,\n).json()[\"processUuid\"]\n\n# Check status\nstatus = requests.get(\n    f\"{base}/etl/v1/process/status/{process_uuid}\",\n    headers=headers,\n).json()\nprint(status)\n```\n\n### Inspect schema and run a data query\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\nschema = requests.get(\n    f\"{base}/data/v1/schema\",\n    headers=headers,\n).json()\n\nprint(schema[\"attributes\"][0])\n\nresult = requests.post(\n    f\"{base}/data/v1/query\",\n    headers={**headers, \"Content-Type\": \"application/json\"},\n    json={\n        \"attributes\": [\"prdNumber\"],\n        \"measures\": [\"omsOrdNum\"],\n        \"timeFilter\": {\n            \"from\": \"2026-01-01\",\n            \"to\": \"2026-01-31\"\n        },\n        \"limit\": 1000\n    },\n).json()\n\nprint(result)\n```\n\n### Troubleshooting\n\n- `401 Unauthorized`: generate a new token and update the bearer header.\n- `429 Too Many Requests`: Data API endpoints are rate-limited to 50 requests per 10 minutes per API token."
+servers:
+- url: https://api.minubo.com
+security:
+- etl_bearerAuth: []
+- data_bearerAuth: []
+tags:
+- name: Auth
+  description: Auth endpoints
+paths:
+  /auth/v1/token:
+    post:
+      tags:
+      - Auth
+      summary: Get a JWT issued to use as Bearer token
+      description: Returns a signed JWT for use as a Bearer token. The token is valid for 20 minutes.
+      operationId: auth_authenticateToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_ApiTokenGrantRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/auth_AccessTokenResponse'
+components:
+  schemas:
+    auth_AccessTokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    auth_ApiTokenGrantRequest:
+      type: object
+      properties:
+        tokenId:
+          type: string
+        tokenSecret:
+          type: string
+  securitySchemes:
+    etl_bearerAuth:
+      type: http
+      description: JWT Authorization header using the Bearer scheme. Can be retrieved by authenticating with the /auth/v1/token endpoint.
+      in: header
+      scheme: bearer
+      bearerFormat: JWT
+    data_bearerAuth:
+      type: http
+      description: JWT Authorization header using the Bearer scheme. Can be retrieved by authenticating with the /auth/v1/token endpoint.
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,342 @@
+openapi: 3.1.0
+info:
+  title: Minubo Auth ETL API
+  version: 1.0.0
+  description: "# Getting Started\n\nBase URL: `https://api.minubo.com`\n\nThis reference combines multiple service specifications into one API view, including Auth, ETL, and the Data API.\n\n## Requirements\n\nTo use the minubo API, you need to have a valid token ID and token secret. Those can be obtained from the minubo Application by navigating to [Settings -> API Credentials](https://app.minubo.com/#/settings/tenant/apicredentials).\n## Authentication\n\nCreate a JWT using `POST /auth/v1/token`:\n\n```bash\ncurl -X POST \"https://api.minubo.com/auth/v1/token\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"tokenId\":\"<token-id>\",\"tokenSecret\":\"<token-secret>\"}'\n```\n\nUse the returned token as a bearer token for protected endpoints.\n\n## Examples\n\n### Trigger ETL and check status\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\n# Trigger ETL process\nprocess_uuid = requests.post(\n    f\"{base}/etl/v1/process/start\",\n    headers=headers,\n).json()[\"processUuid\"]\n\n# Check status\nstatus = requests.get(\n    f\"{base}/etl/v1/process/status/{process_uuid}\",\n    headers=headers,\n).json()\nprint(status)\n```\n\n### Inspect schema and run a data query\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\nschema = requests.get(\n    f\"{base}/data/v1/schema\",\n    headers=headers,\n).json()\n\nprint(schema[\"attributes\"][0])\n\nresult = requests.post(\n    f\"{base}/data/v1/query\",\n    headers={**headers, \"Content-Type\": \"application/json\"},\n    json={\n        \"attributes\": [\"prdNumber\"],\n        \"measures\": [\"omsOrdNum\"],\n        \"timeFilter\": {\n            \"from\": \"2026-01-01\",\n            \"to\": \"2026-01-31\"\n        },\n        \"limit\": 1000\n    },\n).json()\n\nprint(result)\n```\n\n### Troubleshooting\n\n- `401 Unauthorized`: generate a new token and update the bearer header.\n- `429 Too Many Requests`: Data API endpoints are rate-limited to 50 requests per 10 minutes per API token."
+servers:
+- url: https://api.minubo.com
+security:
+- etl_bearerAuth: []
+- data_bearerAuth: []
+tags:
+- name: ETL
+  description: ETL endpoints
+paths:
+  /etl/v1/process/start:
+    post:
+      tags:
+      - ETL
+      summary: Start an ETL process
+      operationId: etl_processStart
+      parameters:
+      - name: forceFullLoad
+        in: query
+        description: 'Force a full load (default: false)'
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '202':
+          description: Process started
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStartResponse'
+        '400':
+          description: Invalid request, missing parameters
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStartResponse'
+        '500':
+          description: Unexpected internal error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStartResponse'
+  /etl/v1/status/report:
+    get:
+      tags:
+      - ETL
+      summary: Get ETL Status History
+      operationId: etl_getEtlDaysStatus
+      responses:
+        '200':
+          description: ETL status history for the last 30 days including today
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLDayResponse'
+        '400':
+          description: Invalid request, missing parameters
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/etl_ETLDayResponse'
+        '500':
+          description: Unexpected internal error
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/etl_ETLDayResponse'
+  /etl/v1/status/current:
+    get:
+      tags:
+      - ETL
+      summary: Get Today's ETL Status
+      operationId: etl_getCurrentEtlDayStatus
+      responses:
+        '200':
+          description: Current ETL day
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLDayResponse'
+        '400':
+          description: Invalid request, missing parameters
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLDayResponse'
+        '404':
+          description: No ETL schedule is planned for the current day
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLDayResponse'
+        '500':
+          description: Unexpected internal error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLDayResponse'
+  /etl/v1/process/status/{processUuid}:
+    get:
+      tags:
+      - ETL
+      summary: Get ETL process status by process UUID
+      operationId: etl_getProcessStatus
+      parameters:
+      - name: processUuid
+        in: path
+        description: Process UUID returned by /etl/v1/process/start
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Process status found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
+        '400':
+          description: Invalid request, missing parameters
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
+        '404':
+          description: Process not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
+        '500':
+          description: Unexpected internal error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
+  /etl/v1/process/status/latest:
+    get:
+      tags:
+      - ETL
+      summary: Get latest ETL process status
+      operationId: etl_getProcessStatus_1
+      responses:
+        '200':
+          description: Process status found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
+        '400':
+          description: Invalid request, missing parameters
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
+        '404':
+          description: Process not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
+        '500':
+          description: Unexpected internal error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
+components:
+  schemas:
+    etl_ETLProcessStartResponse:
+      type: object
+      properties:
+        processUuid:
+          type: string
+          format: uuid
+    etl_ETLDayStageResponse:
+      type: object
+      properties:
+        stageCode:
+          type: string
+          enum:
+          - abort
+          - start
+          - extract
+          - transform
+          - load
+          - check
+        startDateTime:
+          type: integer
+          format: int64
+        endDateTime:
+          type: integer
+          format: int64
+    etl_ETLProcessStepResponse:
+      type: object
+      properties:
+        stepCode:
+          type: string
+          enum:
+          - extract
+          - transform
+          - load
+        startedDateTime:
+          type: string
+          format: date-time
+        finishedDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - running
+          - error
+          - success
+    etl_ETLProcessLogResponse:
+      type: object
+      properties:
+        stageCode:
+          type: string
+          enum:
+          - abort
+          - start
+          - extract
+          - transform
+          - load
+          - check
+        interfaceCode:
+          type: string
+        resultDescription:
+          type: string
+        errorMessage:
+          type: string
+        taskCode:
+          type: string
+        logDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - running
+          - error
+          - success
+          - warning
+          - data_validation_warning
+          - extract_validation_warning
+          - skipped
+          - aborted
+    etl_ETLDayResponse:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        startedDateTime:
+          type: string
+          format: date-time
+        finishingDateTime:
+          type: string
+          format: date-time
+        etaDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - done
+          - ongoing
+          - not_started
+          - on_hold
+          - no_daily_update
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/etl_ETLDayStageResponse'
+        targetDateTime:
+          type: string
+          format: date-time
+        targetResultCode:
+          type: string
+          enum:
+          - in_time
+          - delayed
+          - not_processed
+    etl_ETLProcessStatusResponse:
+      type: object
+      properties:
+        processUuid:
+          type: string
+          format: uuid
+        statusCode:
+          type: string
+          enum:
+          - error
+          - scheduled
+          - loading
+          - schematization
+          - integrating
+          - checking
+          - finished
+          - aborted
+          - killed
+        startedDateTime:
+          type: string
+          format: date-time
+        creationDateTime:
+          type: string
+          format: date-time
+        followupProcessUuid:
+          type: string
+          format: uuid
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/etl_ETLProcessStepResponse'
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/etl_ETLProcessLogResponse'
+  securitySchemes:
+    etl_bearerAuth:
+      type: http
+      description: JWT Authorization header using the Bearer scheme. Can be retrieved by authenticating with the /auth/v1/token endpoint.
+      in: header
+      scheme: bearer
+      bearerFormat: JWT
+    data_bearerAuth:
+      type: http
+      description: JWT Authorization header using the Bearer scheme. Can be retrieved by authenticating with the /auth/v1/token endpoint.
+      in: header
+      scheme: bearer
+      bearerFormat: JWT
