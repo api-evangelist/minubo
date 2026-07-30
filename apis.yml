@@ -1,7 +1,26 @@
 aid: minubo
 name: Minubo
-description: Minubo is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Minubo is a German business-intelligence platform for e-commerce and retail that
+  integrates, models, and contextualizes commerce data — orders, products, customers,
+  and suppliers — into AI Insights, Profit Management, reporting, and a supplier portal.
+  Minubo also exposes a public REST API (Auth, ETL, and Data services) so tenants can
+  authenticate with a JWT, trigger and monitor data loads, discover their queryable
+  schema, and run queries against their modeled commerce data, plus connectors to tools
+  like Power BI, Superset, n8n, and LLMs.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.minubo.com/hubfs/minubo_logo_rz_POS_20210924.svg
 url: https://raw.githubusercontent.com/api-evangelist/minubo/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,15 +30,109 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
-apis: []
+- E-Commerce
+- Business Intelligence
+- Analytics
+- Retail
+- Data
+- ETL
+- Reporting
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: minubo:minubo-auth-api
+  name: Minubo Auth API
+  description: Auth endpoints
+  humanURL: https://api.minubo.com/docs
+  baseURL: https://api.minubo.com
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/minubo-auth-api-openapi.yml
+- aid: minubo:minubo-data-api
+  name: Minubo Data API
+  description: Data endpoints
+  humanURL: https://api.minubo.com/docs
+  baseURL: https://api.minubo.com
+  tags:
+  - Data
+  properties:
+  - type: OpenAPI
+    url: openapi/minubo-data-api-openapi.yml
+- aid: minubo:minubo-etl-api
+  name: Minubo ETL API
+  description: ETL endpoints
+  humanURL: https://api.minubo.com/docs
+  baseURL: https://api.minubo.com
+  tags:
+  - ETL
+  properties:
+  - type: OpenAPI
+    url: openapi/minubo-etl-api-openapi.yml
 common:
 - type: Website
-  url: http://minubo.com
+  url: https://www.minubo.com/
+- type: DeveloperPortal
+  url: https://api.minubo.com/docs
+- type: Documentation
+  url: https://api.minubo.com/docs
+- type: APIReference
+  url: https://api.minubo.com/docs
+- type: GettingStarted
+  url: https://api.minubo.com/docs
+- type: Pricing
+  url: https://www.minubo.com/de/preise
+- type: Blog
+  url: https://blog.minubo.com/de/ecommerce-insights
+- type: Support
+  url: https://minubo.atlassian.net/servicedesk/customer/portals
+- type: SignUp
+  url: https://app.minubo.com
+- type: PrivacyPolicy
+  url: https://www.minubo.com/de-de/legal/datenschutzbedingungen
+- type: TermsOfService
+  url: https://www.minubo.com/de-de/legal/agb
+- type: StatusPage
+  url: https://status.minubo.com
+- type: Authentication
+  url: authentication/minubo-authentication.yml
+- type: Conventions
+  url: conventions/minubo-conventions.yml
+- type: ErrorCatalog
+  url: errors/minubo-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/minubo-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/minubo-rate-limits.yml
+- type: DataModel
+  url: data-model/minubo-data-model.yml
+- type: Conformance
+  url: conformance/minubo-conformance.yml
+- type: MCPServer
+  url: mcp/minubo-mcp.yml
+- type: LLMsTxt
+  url: llms/minubo-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Arazzo
+  name: Query Minubo commerce data
+  url: arazzo/minubo-query-commerce-data.yml
+- type: Arazzo
+  name: Trigger a Minubo ETL run and monitor it
+  url: arazzo/minubo-trigger-etl-and-monitor.yml
+- type: DomainSecurity
+  url: security/minubo-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/minubo-agentic-access.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 19
+  pass: local-v1
