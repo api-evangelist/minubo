@@ -1,0 +1,12 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/minubo-api-openapi-original.json
+workflows:
+  - file: minubo-query-commerce-data.yml
+    workflowId: query-commerce-data
+    title: Query Minubo commerce data
+    summary: Authenticate, discover the tenant schema, and run a data query.
+  - file: minubo-trigger-etl-and-monitor.yml
+    workflowId: trigger-etl-and-monitor
+    title: Trigger a Minubo ETL run and monitor it
+    summary: Authenticate, start an ETL process, and read its status.

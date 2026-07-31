@@ -1,0 +1,27 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  https://api.minubo.com/docs — the Minubo API reference (Data API section and
+  the Troubleshooting note in the combined Auth/ETL/Data specification).
+provider: Minubo
+providerId: minubo
+description: >-
+  Minubo Data API endpoints are rate-limited per API token. The reference
+  documents a limit of 50 requests per 10 minutes per API token for the Data API,
+  signalled with HTTP 429 Too Many Requests. ETL and Auth endpoints are not
+  documented with an explicit published rate.
+tags:
+  - Rate Limiting
+  - Analytics
+responseCodes:
+  throttled: 429
+limits:
+  - name: Data API requests
+    scope: api_token
+    metric: requests
+    limit: 50
+    timeFrame: 10_minutes
+    applies_to:
+      - openapi/minubo-api-openapi-original.json#data_query
+      - openapi/minubo-api-openapi-original.json#data_getSchema
+    docs: https://api.minubo.com/docs

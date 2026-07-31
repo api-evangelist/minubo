@@ -1,0 +1,71 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  https://api.minubo.com/docs — the combined Auth/ETL/Data reference. Cross-cutting
+  request/response semantics that apply across the Minubo API, plus what the
+  OpenAPI implies.
+description: >-
+  How the Minubo API behaves across operations: authentication style, versioning,
+  the (absent) idempotency contract, the query/paging model, error envelope, and
+  rate-limit signalling. Cross-links authentication/, errors/, lifecycle/, and
+  rate-limits/.
+
+base_url: https://api.minubo.com
+api_style: REST over HTTPS, JSON requests and responses
+
+authentication:
+  scheme: Bearer JWT
+  token_source: POST /auth/v1/token with tokenId + tokenSecret (from app.minubo.com Settings -> API Credentials)
+  token_ttl: 20 minutes
+  header: 'Authorization: Bearer <jwt>'
+  docs: https://api.minubo.com/docs
+  detail: authentication/minubo-authentication.yml
+
+idempotency:
+  supported: false
+  notes: >-
+    No idempotency-key header or parameter is documented. ETL POST /etl/v1/process/start
+    returns a processUuid to correlate a triggered run, but there is no client-supplied
+    idempotency key to deduplicate retried writes.
+
+pagination:
+  style: single-request-limit
+  request_params:
+    limit: Data query row cap, integer 0-200000 (required on /data/v1/query)
+  notes: >-
+    The Data API returns all matching rows up to limit in one response; there is no
+    cursor/offset paging. ETL status history is a fixed window (last 30 days including
+    today). No has_more / next-cursor fields are present.
+
+query_model:
+  schema_discovery: GET /data/v1/schema returns attribute + measure field codes (with nameEN/nameDE) available to the tenant
+  query: POST /data/v1/query with attributes[], measures[], required timeFilter, optional comparisonTimeFilter, filter[], orderBy
+  limits:
+    max_attributes: 20
+    max_measures: 20
+    limit_range: 0-200000
+    time_filter: required; from must not be after to
+    filter_operators: [IN, NOT_IN, EXISTS, NOT_EXISTS]
+    filter_rules: IN/NOT_IN require non-empty values; EXISTS/NOT_EXISTS must omit values
+    order_by: field must reference a declared attribute or measure
+
+request_tracing:
+  header: null
+  notes: No documented request-id / correlation header.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  detail: lifecycle/minubo-lifecycle.yml
+
+error_envelope:
+  format: custom
+  notes: >-
+    Error responses reuse the service's success payload schema rather than a
+    dedicated problem envelope; not RFC 9457. See errors/minubo-problem-types.yml.
+  detail: errors/minubo-problem-types.yml
+
+rate_limiting:
+  data_api: 50 requests per 10 minutes per API token
+  throttled_status: 429
+  detail: rate-limits/minubo-rate-limits.yml

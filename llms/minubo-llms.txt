@@ -1,0 +1,32 @@
+# Minubo
+
+> Minubo is a German business-intelligence platform for e-commerce and retail. It integrates, models, and contextualizes commerce data (orders, products, customers, suppliers) and exposes it through AI Insights, Profit Management, reporting, a supplier portal, and a public REST API for authentication, ETL orchestration, and querying the modeled data.
+
+The Minubo API combines three services under one reference: Auth (JWT token issuance), ETL (trigger and monitor data loads), and Data (discover the tenant schema and run queries). Authentication is a Bearer JWT obtained from POST /auth/v1/token using a tokenId and tokenSecret created in the Minubo application (Settings -> API Credentials). Tokens are valid for 20 minutes. The Data API is rate-limited to 50 requests per 10 minutes per API token.
+
+## API
+- [Minubo API reference (Stoplight)](https://api.minubo.com/docs)
+- [OpenAPI 3.1 specification](https://api.minubo.com/docs/openapi-merged.json)
+- Base URL: https://api.minubo.com
+
+## Operations
+- POST /auth/v1/token — Get a JWT bearer token (valid 20 minutes)
+- POST /etl/v1/process/start — Start an ETL process (optional forceFullLoad)
+- GET /etl/v1/status/report — ETL status history (last 30 days)
+- GET /etl/v1/status/current — Today's ETL status
+- GET /etl/v1/process/status/{processUuid} — ETL process status by UUID
+- GET /etl/v1/process/status/latest — Latest ETL process status
+- GET /data/v1/schema — Discover queryable attribute + measure codes for your tenant
+- POST /data/v1/query — Run a query (attributes, measures, timeFilter, filters, orderBy, limit)
+
+## Docs
+- [Product](https://www.minubo.com/de/produkt)
+- [Pricing](https://www.minubo.com/de/preise)
+- [Blog — E-Commerce Insights](https://blog.minubo.com/de/ecommerce-insights)
+- [Support portal](https://minubo.atlassian.net/servicedesk/customer/portals)
+- [Status page](https://status.minubo.com)
+- [Application login](https://app.minubo.com)
+
+## Legal
+- [Privacy Policy](https://www.minubo.com/de-de/legal/datenschutzbedingungen)
+- [Terms of Service (AGB)](https://www.minubo.com/de-de/legal/agb)

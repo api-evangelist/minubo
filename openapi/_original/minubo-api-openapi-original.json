@@ -1,0 +1,867 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Minubo API",
+    "version": "1.0.0",
+    "description": "# Getting Started\n\nBase URL: `https://api.minubo.com`\n\nThis reference combines multiple service specifications into one API view, including Auth, ETL, and the Data API.\n\n## Requirements\n\nTo use the minubo API, you need to have a valid token ID and token secret. Those can be obtained from the minubo Application by navigating to [Settings -> API Credentials](https://app.minubo.com/#/settings/tenant/apicredentials).\n## Authentication\n\nCreate a JWT using `POST /auth/v1/token`:\n\n```bash\ncurl -X POST \"https://api.minubo.com/auth/v1/token\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"tokenId\":\"<token-id>\",\"tokenSecret\":\"<token-secret>\"}'\n```\n\nUse the returned token as a bearer token for protected endpoints.\n\n## Examples\n\n### Trigger ETL and check status\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\n# Trigger ETL process\nprocess_uuid = requests.post(\n    f\"{base}/etl/v1/process/start\",\n    headers=headers,\n).json()[\"processUuid\"]\n\n# Check status\nstatus = requests.get(\n    f\"{base}/etl/v1/process/status/{process_uuid}\",\n    headers=headers,\n).json()\nprint(status)\n```\n\n### Inspect schema and run a data query\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\nschema = requests.get(\n    f\"{base}/data/v1/schema\",\n    headers=headers,\n).json()\n\nprint(schema[\"attributes\"][0])\n\nresult = requests.post(\n    f\"{base}/data/v1/query\",\n    headers={**headers, \"Content-Type\": \"application/json\"},\n    json={\n        \"attributes\": [\"prdNumber\"],\n        \"measures\": [\"omsOrdNum\"],\n        \"timeFilter\": {\n            \"from\": \"2026-01-01\",\n            \"to\": \"2026-01-31\"\n        },\n        \"limit\": 1000\n    },\n).json()\n\nprint(result)\n```\n\n### Troubleshooting\n\n- `401 Unauthorized`: generate a new token and update the bearer header.\n- `429 Too Many Requests`: Data API endpoints are rate-limited to 50 requests per 10 minutes per API token."
+  },
+  "servers": [
+    {
+      "url": "https://api.minubo.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth endpoints"
+    },
+    {
+      "name": "ETL",
+      "description": "ETL endpoints"
+    },
+    {
+      "name": "Data",
+      "description": "Data endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/v1/token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get a JWT issued to use as Bearer token",
+        "description": "Returns a signed JWT for use as a Bearer token. The token is valid for 20 minutes.",
+        "operationId": "auth_authenticateToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/auth_ApiTokenGrantRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/auth_AccessTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/etl/v1/process/start": {
+      "post": {
+        "tags": [
+          "ETL"
+        ],
+        "summary": "Start an ETL process",
+        "operationId": "etl_processStart",
+        "parameters": [
+          {
+            "name": "forceFullLoad",
+            "in": "query",
+            "description": "Force a full load (default: false)",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Process started",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStartResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, missing parameters",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStartResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected internal error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStartResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/etl/v1/status/report": {
+      "get": {
+        "tags": [
+          "ETL"
+        ],
+        "summary": "Get ETL Status History",
+        "operationId": "etl_getEtlDaysStatus",
+        "responses": {
+          "200": {
+            "description": "ETL status history for the last 30 days including today",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLDayResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, missing parameters",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/etl_ETLDayResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected internal error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/etl_ETLDayResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/etl/v1/status/current": {
+      "get": {
+        "tags": [
+          "ETL"
+        ],
+        "summary": "Get Today's ETL Status",
+        "operationId": "etl_getCurrentEtlDayStatus",
+        "responses": {
+          "200": {
+            "description": "Current ETL day",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLDayResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, missing parameters",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLDayResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No ETL schedule is planned for the current day",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLDayResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected internal error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLDayResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/etl/v1/process/status/{processUuid}": {
+      "get": {
+        "tags": [
+          "ETL"
+        ],
+        "summary": "Get ETL process status by process UUID",
+        "operationId": "etl_getProcessStatus",
+        "parameters": [
+          {
+            "name": "processUuid",
+            "in": "path",
+            "description": "Process UUID returned by /etl/v1/process/start",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Process status found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStatusResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, missing parameters",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStatusResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Process not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStatusResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected internal error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/etl/v1/process/status/latest": {
+      "get": {
+        "tags": [
+          "ETL"
+        ],
+        "summary": "Get latest ETL process status",
+        "operationId": "etl_getProcessStatus_1",
+        "responses": {
+          "200": {
+            "description": "Process status found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStatusResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, missing parameters",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStatusResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Process not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStatusResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected internal error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/etl_ETLProcessStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/v1/query": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Execute a data query",
+        "description": "\nExecute a query against your minubo data.\n\nUse `GET /data/v1/schema` first to discover the attributes and measures available for your account. The schema response contains the field `code` values that can be used in `attributes`, `measures`, filters, and ordering. Authenticate with `/auth/v1/token` and send the returned JWT as a Bearer token.\n\n**Query limitations:**\n- At most 20 `attributes` and 20 `measures` are allowed per request.\n- `limit` must be between 0 and 200000.\n- `timeFilter` is required, and its `from` must not be after its `to`. The same applies to `comparisonTimeFilter` when provided.\n- `IN` and `NOT_IN` filters require a non-empty `values` list; `EXISTS` and `NOT_EXISTS` filters must not set `values`.\n- `orderBy.field` must reference one of the fields declared in `attributes` or `measures`.\n",
+        "operationId": "data_query",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/data_DataQueryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Query executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_DataQueryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_DataQueryResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Field not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_DataQueryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_DataQueryResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_DataQueryResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Backend timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_DataQueryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/v1/schema": {
+      "get": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Get data model schema",
+        "description": "\nReturn the data model schema available to your tenant.\n\nCall this endpoint before `POST /data/v1/query` to discover which attribute and measure codes can be queried. The response contains localized names (`nameEN`, `nameDE`) for display and stable `code` values for query requests. The schema only includes fields available for your tenant.\n",
+        "operationId": "data_getSchema",
+        "responses": {
+          "200": {
+            "description": "Schema retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_DataSchemaResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/data_DataSchemaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "auth_ApiTokenGrantRequest": {
+        "type": "object",
+        "properties": {
+          "tokenId": {
+            "type": "string"
+          },
+          "tokenSecret": {
+            "type": "string"
+          }
+        }
+      },
+      "auth_AccessTokenResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "etl_ETLProcessStartResponse": {
+        "type": "object",
+        "properties": {
+          "processUuid": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "etl_ETLDayResponse": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "startedDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishingDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "etaDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "statusCode": {
+            "type": "string",
+            "enum": [
+              "done",
+              "ongoing",
+              "not_started",
+              "on_hold",
+              "no_daily_update"
+            ]
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/etl_ETLDayStageResponse"
+            }
+          },
+          "targetDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "targetResultCode": {
+            "type": "string",
+            "enum": [
+              "in_time",
+              "delayed",
+              "not_processed"
+            ]
+          }
+        }
+      },
+      "etl_ETLDayStageResponse": {
+        "type": "object",
+        "properties": {
+          "stageCode": {
+            "type": "string",
+            "enum": [
+              "abort",
+              "start",
+              "extract",
+              "transform",
+              "load",
+              "check"
+            ]
+          },
+          "startDateTime": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "endDateTime": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "etl_ETLProcessLogResponse": {
+        "type": "object",
+        "properties": {
+          "stageCode": {
+            "type": "string",
+            "enum": [
+              "abort",
+              "start",
+              "extract",
+              "transform",
+              "load",
+              "check"
+            ]
+          },
+          "interfaceCode": {
+            "type": "string"
+          },
+          "resultDescription": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "taskCode": {
+            "type": "string"
+          },
+          "logDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "statusCode": {
+            "type": "string",
+            "enum": [
+              "running",
+              "error",
+              "success",
+              "warning",
+              "data_validation_warning",
+              "extract_validation_warning",
+              "skipped",
+              "aborted"
+            ]
+          }
+        }
+      },
+      "etl_ETLProcessStatusResponse": {
+        "type": "object",
+        "properties": {
+          "processUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "statusCode": {
+            "type": "string",
+            "enum": [
+              "error",
+              "scheduled",
+              "loading",
+              "schematization",
+              "integrating",
+              "checking",
+              "finished",
+              "aborted",
+              "killed"
+            ]
+          },
+          "startedDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "followupProcessUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/etl_ETLProcessStepResponse"
+            }
+          },
+          "logs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/etl_ETLProcessLogResponse"
+            }
+          }
+        }
+      },
+      "etl_ETLProcessStepResponse": {
+        "type": "object",
+        "properties": {
+          "stepCode": {
+            "type": "string",
+            "enum": [
+              "extract",
+              "transform",
+              "load"
+            ]
+          },
+          "startedDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishedDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "statusCode": {
+            "type": "string",
+            "enum": [
+              "running",
+              "error",
+              "success"
+            ]
+          }
+        }
+      },
+      "data_DataQueryFilterEntry": {
+        "type": "object",
+        "properties": {
+          "attribute": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "IN",
+              "NOT_IN",
+              "EXISTS",
+              "NOT_EXISTS"
+            ]
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "data_DataQueryOrderBy": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        },
+        "required": [
+          "direction"
+        ]
+      },
+      "data_DataQueryRequest": {
+        "type": "object",
+        "properties": {
+          "attributes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "measures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "timeFilter": {
+            "$ref": "#/components/schemas/data_DataQueryTimeFilterModel"
+          },
+          "comparisonTimeFilter": {
+            "$ref": "#/components/schemas/data_DataQueryTimeFilterModel"
+          },
+          "filter": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data_DataQueryFilterEntry"
+            }
+          },
+          "orderBy": {
+            "$ref": "#/components/schemas/data_DataQueryOrderBy"
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": [
+          "attributes",
+          "filter",
+          "limit",
+          "measures"
+        ]
+      },
+      "data_DataQueryTimeFilterModel": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date"
+          },
+          "to": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "data_DataQueryResponse": {
+        "type": "object",
+        "properties": {
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data_DataQueryRow"
+            }
+          }
+        },
+        "required": [
+          "rows"
+        ]
+      },
+      "data_DataQueryRow": {
+        "type": "object",
+        "properties": {
+          "attributes": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "values": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "comparison": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "attributes",
+          "values"
+        ]
+      },
+      "data_DataSchemaFieldResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "nameEN": {
+            "type": "string"
+          },
+          "nameDE": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "nameDE",
+          "nameEN"
+        ]
+      },
+      "data_DataSchemaResponse": {
+        "type": "object",
+        "properties": {
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data_DataSchemaFieldResponse"
+            }
+          },
+          "measures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data_DataSchemaFieldResponse"
+            }
+          }
+        },
+        "required": [
+          "attributes",
+          "measures"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "etl_bearerAuth": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme. Can be retrieved by authenticating with the /auth/v1/token endpoint.",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "data_bearerAuth": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme. Can be retrieved by authenticating with the /auth/v1/token endpoint.",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "etl_bearerAuth": []
+    },
+    {
+      "data_bearerAuth": []
+    }
+  ]
+}

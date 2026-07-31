@@ -1,0 +1,83 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/minubo-api-openapi-original.json
+description: >-
+  Entity-relationship graph derived from the Minubo API OpenAPI component schemas
+  and their $ref links / id-reference fields. Minubo is a commerce BI platform: the
+  API exposes an Auth surface, an ETL orchestration surface, and a queryable Data
+  surface over the tenant's modeled commerce data.
+entities:
+  - name: ApiTokenGrant
+    schema: auth_ApiTokenGrantRequest
+    keys: [tokenId, tokenSecret]
+    description: Credentials exchanged for a JWT access token.
+  - name: AccessToken
+    schema: auth_AccessTokenResponse
+    description: Short-lived (20 min) JWT bearer token.
+  - name: ETLProcess
+    schema: etl_ETLProcessStartResponse
+    keys: [processUuid]
+    description: A triggered extract-transform-load run.
+  - name: ETLProcessStatus
+    schema: etl_ETLProcessStatusResponse
+    keys: [processUuid]
+    description: Detailed status of an ETL process, with steps and logs.
+  - name: ETLProcessStep
+    schema: etl_ETLProcessStepResponse
+    description: One extract/transform/load step within a process.
+  - name: ETLProcessLog
+    schema: etl_ETLProcessLogResponse
+    description: A log line emitted during an ETL stage.
+  - name: ETLDay
+    schema: etl_ETLDayResponse
+    keys: [date]
+    description: The daily ETL schedule status (today or one of the last 30 days).
+  - name: ETLDayStage
+    schema: etl_ETLDayStageResponse
+    description: A stage (start/extract/transform/load/check/abort) within an ETL day.
+  - name: DataSchema
+    schema: data_DataSchemaResponse
+    description: The tenant's queryable attributes and measures.
+  - name: DataSchemaField
+    schema: data_DataSchemaFieldResponse
+    keys: [code]
+    description: A single attribute or measure field (code + nameEN/nameDE).
+  - name: DataQuery
+    schema: data_DataQueryRequest
+    description: A query request over attributes, measures, filters, and a time window.
+  - name: DataQueryResponse
+    schema: data_DataQueryResponse
+    description: Query result rows.
+  - name: DataQueryRow
+    schema: data_DataQueryRow
+    description: One result row (attribute values, measure values, optional comparison).
+relationships:
+  - from: ETLProcessStatus
+    to: ETLProcessStep
+    kind: has_many
+    via: steps
+  - from: ETLProcessStatus
+    to: ETLProcessLog
+    kind: has_many
+    via: logs
+  - from: ETLProcessStatus
+    to: ETLProcessStatus
+    kind: has_one
+    via: followupProcessUuid
+    note: A process may reference a follow-up process by UUID.
+  - from: ETLDay
+    to: ETLDayStage
+    kind: has_many
+    via: stages
+  - from: DataSchema
+    to: DataSchemaField
+    kind: has_many
+    via: attributes+measures
+  - from: DataQuery
+    to: DataSchemaField
+    kind: references
+    via: attributes+measures (by field code)
+  - from: DataQueryResponse
+    to: DataQueryRow
+    kind: has_many
+    via: rows

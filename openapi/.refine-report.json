@@ -1,0 +1,18 @@
+{
+  "provider": "minubo",
+  "sources": [
+    "minubo-auth-api-openapi.yml",
+    "minubo-data-api-openapi.yml",
+    "minubo-etl-api-openapi.yml"
+  ],
+  "outputs": [
+    "minubo-auth-api-openapi.yml",
+    "minubo-data-api-openapi.yml",
+    "minubo-etl-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

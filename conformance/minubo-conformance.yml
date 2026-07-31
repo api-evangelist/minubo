@@ -1,0 +1,29 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/minubo-api-openapi-original.json
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme; auth is a custom token-exchange issuing a JWT.
+  - id: oidc
+    conforms: false
+  - id: rfc6750-bearer
+    conforms: true
+    evidence: HTTP bearer scheme, bearerFormat JWT, Authorization header.
+  - id: jwt
+    conforms: true
+    evidence: /auth/v1/token issues a signed JWT valid 20 minutes.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Error responses reuse service payload schemas, not application/problem+json.
+  - id: json-api
+    conforms: false
+  - id: pagination
+    conforms: false
+    evidence: Single-request limit model; no cursor/offset paging.
+  - id: idempotency
+    conforms: false
+    evidence: No idempotency-key contract documented.
+  - id: openapi-3.1
+    conforms: true
+    evidence: Reference published as OpenAPI 3.1.0 at /docs/openapi-merged.json.

@@ -1,0 +1,15 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/minubo-api-openapi-original.json
+summary:
+  types:
+  - http
+schemes:
+- name: etl_bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: JWT Authorization header using the Bearer scheme. Can be retrieved by authenticating
+    with the /auth/v1/token endpoint.
+  sources:
+  - openapi/minubo-api-openapi-original.json

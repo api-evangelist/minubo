@@ -1,0 +1,37 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/minubo-api-openapi-original.json
+notes: >-
+  No official hosted/remote Minubo MCP server was found (checked docs, npm
+  @modelcontextprotocol scope, and MCP registries). This is a candidate tool list
+  derived one-tool-per-operation from the Minubo OpenAPI, for building an MCP
+  server that fronts the Minubo API.
+server:
+  name: minubo
+  transport: http
+tools:
+  - name: authenticate_token
+    description: Exchange tokenId + tokenSecret for a 20-minute JWT bearer token.
+    source_operation: openapi/minubo-api-openapi-original.json#auth_authenticateToken
+  - name: start_etl_process
+    description: Start an ETL process (optionally forceFullLoad); returns a processUuid.
+    source_operation: openapi/minubo-api-openapi-original.json#etl_processStart
+  - name: get_etl_status_history
+    description: Get ETL status history for the last 30 days including today.
+    source_operation: openapi/minubo-api-openapi-original.json#etl_getEtlDaysStatus
+  - name: get_current_etl_status
+    description: Get today's ETL day status.
+    source_operation: openapi/minubo-api-openapi-original.json#etl_getCurrentEtlDayStatus
+  - name: get_etl_process_status
+    description: Get an ETL process status by process UUID.
+    source_operation: openapi/minubo-api-openapi-original.json#etl_getProcessStatus
+  - name: get_latest_etl_process_status
+    description: Get the latest ETL process status.
+    source_operation: openapi/minubo-api-openapi-original.json#etl_getProcessStatus_1
+  - name: query_data
+    description: Execute a query over attributes, measures, filters, and a time window.
+    source_operation: openapi/minubo-api-openapi-original.json#data_query
+  - name: get_data_schema
+    description: Get the tenant's queryable attribute and measure field codes.
+    source_operation: openapi/minubo-api-openapi-original.json#data_getSchema

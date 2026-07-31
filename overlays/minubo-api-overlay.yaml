@@ -1,0 +1,23 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Minubo API
+  version: 1.0.0
+extends: openapi/minubo-api-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-rating: 3
+      x-apievangelist-notes: >-
+        Well-formed OpenAPI 3.1 with clear service split (Auth/ETL/Data), rich
+        getting-started description, and documented rate limits. Gaps: error
+        responses reuse success schemas (no RFC 9457), no examples in-spec, no
+        idempotency contract, no events/webhooks surface.
+  - target: $.info
+    update:
+      x-artifacts:
+        authentication: authentication/minubo-authentication.yml
+        conventions: conventions/minubo-conventions.yml
+        errors: errors/minubo-problem-types.yml
+        lifecycle: lifecycle/minubo-lifecycle.yml
+        rate-limits: rate-limits/minubo-rate-limits.yml
+        data-model: data-model/minubo-data-model.yml

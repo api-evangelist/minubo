@@ -1,0 +1,12 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/minubo-api-openapi-original.json
+skills:
+  - file: minubo-query-commerce-data.md
+    name: Query Minubo commerce data
+    api: openapi/minubo-api-openapi-original.json
+    operations: [auth_authenticateToken, data_getSchema, data_query]
+  - file: minubo-trigger-etl-and-monitor.md
+    name: Trigger a Minubo ETL run and monitor it
+    api: openapi/minubo-api-openapi-original.json
+    operations: [auth_authenticateToken, etl_processStart, etl_getProcessStatus, etl_getProcessStatus_1, etl_getCurrentEtlDayStatus]

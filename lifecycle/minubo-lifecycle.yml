@@ -1,0 +1,22 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  https://api.minubo.com/docs (versioning derived from URI paths) and
+  https://status.minubo.com (live status page, HTTP 200).
+versioning:
+  scheme: uri-path
+  mechanism: Version segment in the path (/auth/v1, /etl/v1, /data/v1)
+  current: v1
+  docs: https://api.minubo.com/docs
+  notes: >-
+    Each service (Auth, ETL, Data) carries its own v1 path prefix. No date-based
+    or header-based versioning is documented.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No public deprecation policy or RFC 8594 Sunset/Deprecation header support was found.
+sla:
+  url: null
+  public_uptime_target: null
+status_page: https://status.minubo.com
+deprecated_operations: []

@@ -1,0 +1,82 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/minubo-api-openapi-original.json
+format: custom
+notes: >-
+  Minubo does not use RFC 9457 application/problem+json. Documented 4xx/5xx
+  responses reuse the same success payload schema per service (e.g. an ETL error
+  still returns an ETLProcessStatusResponse / ETLProcessStartResponse envelope, a
+  Data error returns a DataQueryResponse envelope). Titles/status meanings below
+  are derived from the OpenAPI response descriptions plus the Troubleshooting
+  section of the reference. 401 and 429 are documented narratively in the API
+  description rather than per-operation.
+problems:
+  - status: 400
+    title: Invalid request, missing parameters
+    services: [ETL, Data]
+    source_operations:
+      - openapi/minubo-api-openapi-original.json#etl_processStart
+      - openapi/minubo-api-openapi-original.json#etl_getEtlDaysStatus
+      - openapi/minubo-api-openapi-original.json#etl_getCurrentEtlDayStatus
+      - openapi/minubo-api-openapi-original.json#etl_getProcessStatus
+      - openapi/minubo-api-openapi-original.json#data_query
+    remediation: Check required parameters and request body against the reference.
+  - status: 401
+    title: Unauthorized
+    services: [Auth, ETL, Data]
+    remediation: >-
+      The JWT is missing or expired (tokens are valid for 20 minutes). Generate a
+      new token via POST /auth/v1/token and update the Authorization: Bearer header.
+  - status: 403
+    title: Field not allowed
+    services: [Data]
+    source_operations:
+      - openapi/minubo-api-openapi-original.json#data_query
+    remediation: >-
+      A requested attribute or measure code is not permitted for your tenant. Call
+      GET /data/v1/schema to discover the allowed field codes.
+  - status: 404
+    title: Not found
+    services: [ETL]
+    source_operations:
+      - openapi/minubo-api-openapi-original.json#etl_getCurrentEtlDayStatus
+      - openapi/minubo-api-openapi-original.json#etl_getProcessStatus
+      - openapi/minubo-api-openapi-original.json#etl_getProcessStatus_1
+    remediation: >-
+      Either no ETL schedule is planned for the current day, or the referenced
+      process UUID does not exist.
+  - status: 422
+    title: Unprocessable query
+    services: [Data]
+    source_operations:
+      - openapi/minubo-api-openapi-original.json#data_query
+    remediation: >-
+      The query violates a documented constraint (max 20 attributes/measures,
+      limit 0-200000, timeFilter.from not after timeFilter.to, IN/NOT_IN require a
+      non-empty values list, EXISTS/NOT_EXISTS must not set values, orderBy.field
+      must be a declared attribute or measure).
+  - status: 429
+    title: Too Many Requests
+    services: [Data]
+    source_operations:
+      - openapi/minubo-api-openapi-original.json#data_query
+      - openapi/minubo-api-openapi-original.json#data_getSchema
+    remediation: >-
+      Data API is rate-limited to 50 requests per 10 minutes per API token. Back
+      off and retry after the window.
+  - status: 500
+    title: Unexpected internal error
+    services: [ETL, Data]
+    source_operations:
+      - openapi/minubo-api-openapi-original.json#etl_processStart
+      - openapi/minubo-api-openapi-original.json#data_query
+      - openapi/minubo-api-openapi-original.json#data_getSchema
+    remediation: Retry later; contact Minubo support if it persists.
+  - status: 504
+    title: Backend timeout
+    services: [Data]
+    source_operations:
+      - openapi/minubo-api-openapi-original.json#data_query
+    remediation: >-
+      The query took too long. Reduce the time range, number of fields, or limit
+      and retry.
