@@ -77,6 +77,8 @@ apis:
   - type: OpenAPI
     url: openapi/minubo-etl-api-openapi.yml
 common:
+- type: Overlay
+  url: overlays/minubo-api-overlay.yaml
 - type: Website
   url: https://www.minubo.com/
 - type: DeveloperPortal
