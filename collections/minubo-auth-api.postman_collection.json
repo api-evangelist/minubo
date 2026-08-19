@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "a9203075-596f-40b8-9010-70cfd6e511a7",
+      "name": "Auth",
+      "description": {
+        "content": "Auth endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a6dca8e7-f6c3-49ed-b2ad-2ee7ca99a4c0",
+          "name": "Get a JWT issued to use as Bearer token",
+          "request": {
+            "name": "Get a JWT issued to use as Bearer token",
+            "description": {
+              "content": "Returns a signed JWT for use as a Bearer token. The token is valid for 20 minutes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "v1",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tokenId\": \"<string>\",\n  \"tokenSecret\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4f050e15-ba5d-48c3-b271-a9c477b74c7d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "v1",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tokenId\": \"<string>\",\n  \"tokenSecret\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.minubo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4a06b5d9-f916-4cbd-94c9-8fc77c107348",
+    "name": "Minubo Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Getting Started\n\nBase URL: `https://api.minubo.com`\n\nThis reference combines multiple service specifications into one API view, including Auth, ETL, and the Data API.\n\n## Requirements\n\nTo use the minubo API, you need to have a valid token ID and token secret. Those can be obtained from the minubo Application by navigating to [Settings -> API Credentials](https://app.minubo.com/#/settings/tenant/apicredentials).\n## Authentication\n\nCreate a JWT using `POST /auth/v1/token`:\n\n```bash\ncurl -X POST \"https://api.minubo.com/auth/v1/token\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"tokenId\":\"<token-id>\",\"tokenSecret\":\"<token-secret>\"}'\n```\n\nUse the returned token as a bearer token for protected endpoints.\n\n## Examples\n\n### Trigger ETL and check status\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\n# Trigger ETL process\nprocess_uuid = requests.post(\n    f\"{base}/etl/v1/process/start\",\n    headers=headers,\n).json()[\"processUuid\"]\n\n# Check status\nstatus = requests.get(\n    f\"{base}/etl/v1/process/status/{process_uuid}\",\n    headers=headers,\n).json()\nprint(status)\n```\n\n### Inspect schema and run a data query\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\nschema = requests.get(\n    f\"{base}/data/v1/schema\",\n    headers=headers,\n).json()\n\nprint(schema[\"attributes\"][0])\n\nresult = requests.post(\n    f\"{base}/data/v1/query\",\n    headers={**headers, \"Content-Type\": \"application/json\"},\n    json={\n        \"attributes\": [\"prdNumber\"],\n        \"measures\": [\"omsOrdNum\"],\n        \"timeFilter\": {\n            \"from\": \"2026-01-01\",\n            \"to\": \"2026-01-31\"\n        },\n        \"limit\": 1000\n    },\n).json()\n\nprint(result)\n```\n\n### Troubleshooting\n\n- `401 Unauthorized`: generate a new token and update the bearer header.\n- `429 Too Many Requests`: Data API endpoints are rate-limited to 50 requests per 10 minutes per API token.",
+      "type": "text/plain"
+    }
+  }
+}

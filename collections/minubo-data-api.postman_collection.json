@@ -1,0 +1,536 @@
+{
+  "item": [
+    {
+      "id": "200fa27f-21e0-413a-893e-e35bef455540",
+      "name": "Data",
+      "description": {
+        "content": "Data endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "75a3edb3-8996-4d86-bbb1-a575dab5130c",
+          "name": "Execute a data query",
+          "request": {
+            "name": "Execute a data query",
+            "description": {
+              "content": "\nExecute a query against your minubo data.\n\nUse `GET /data/v1/schema` first to discover the attributes and measures available for your account. The schema response contains the field `code` values that can be used in `attributes`, `measures`, filters, and ordering. Authenticate with `/auth/v1/token` and send the returned JWT as a Bearer token.\n\n**Query limitations:**\n- At most 20 `attributes` and 20 `measures` are allowed per request.\n- `limit` must be between 0 and 200000.\n- `timeFilter` is required, and its `from` must not be after its `to`. The same applies to `comparisonTimeFilter` when provided.\n- `IN` and `NOT_IN` filters require a non-empty `values` list; `EXISTS` and `NOT_EXISTS` filters must not set `values`.\n- `orderBy.field` must reference one of the fields declared in `attributes` or `measures`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "v1",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attributes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"filter\": [\n    {\n      \"attribute\": \"<string>\",\n      \"operator\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"attribute\": \"<string>\",\n      \"operator\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"limit\": \"<integer>\",\n  \"measures\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timeFilter\": {\n    \"from\": \"<date>\",\n    \"to\": \"<date>\"\n  },\n  \"comparisonTimeFilter\": {\n    \"from\": \"<date>\",\n    \"to\": \"<date>\"\n  },\n  \"orderBy\": {\n    \"direction\": \"<string>\",\n    \"field\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "096f761d-e06d-402e-b4ea-4ccfd938ee78",
+              "name": "Query executed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"filter\": [\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"NOT_IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"limit\": \"<integer>\",\n  \"measures\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timeFilter\": {\n    \"from\": \"1969-06-20\",\n    \"to\": \"1989-04-20\"\n  },\n  \"comparisonTimeFilter\": {\n    \"from\": \"2020-01-14\",\n    \"to\": \"1993-11-11\"\n  },\n  \"orderBy\": {\n    \"direction\": \"ASC\",\n    \"field\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rows\": [\n    {\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 1429.4636541094042,\n        \"key_1\": 3486.3852201617674,\n        \"key_2\": 2524.3606213925286\n      },\n      \"comparison\": {\n        \"key_0\": 5716.961308534487,\n        \"key_1\": 301.3626146232384\n      }\n    },\n    {\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 2557.661113552753\n      },\n      \"comparison\": {\n        \"key_0\": 1528.7014044013724\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d65ba730-3297-4e70-9d86-1eabaaa2d1d6",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"filter\": [\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"NOT_IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"limit\": \"<integer>\",\n  \"measures\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timeFilter\": {\n    \"from\": \"1969-06-20\",\n    \"to\": \"1989-04-20\"\n  },\n  \"comparisonTimeFilter\": {\n    \"from\": \"2020-01-14\",\n    \"to\": \"1993-11-11\"\n  },\n  \"orderBy\": {\n    \"direction\": \"ASC\",\n    \"field\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rows\": [\n    {\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 1429.4636541094042,\n        \"key_1\": 3486.3852201617674,\n        \"key_2\": 2524.3606213925286\n      },\n      \"comparison\": {\n        \"key_0\": 5716.961308534487,\n        \"key_1\": 301.3626146232384\n      }\n    },\n    {\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 2557.661113552753\n      },\n      \"comparison\": {\n        \"key_0\": 1528.7014044013724\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9529b780-9bcb-4560-9503-eddb9d2e44f8",
+              "name": "Field not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"filter\": [\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"NOT_IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"limit\": \"<integer>\",\n  \"measures\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timeFilter\": {\n    \"from\": \"1969-06-20\",\n    \"to\": \"1989-04-20\"\n  },\n  \"comparisonTimeFilter\": {\n    \"from\": \"2020-01-14\",\n    \"to\": \"1993-11-11\"\n  },\n  \"orderBy\": {\n    \"direction\": \"ASC\",\n    \"field\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rows\": [\n    {\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 1429.4636541094042,\n        \"key_1\": 3486.3852201617674,\n        \"key_2\": 2524.3606213925286\n      },\n      \"comparison\": {\n        \"key_0\": 5716.961308534487,\n        \"key_1\": 301.3626146232384\n      }\n    },\n    {\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 2557.661113552753\n      },\n      \"comparison\": {\n        \"key_0\": 1528.7014044013724\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53efb28a-24a6-4979-9f9a-c6809ed5f952",
+              "name": "Unprocessable query",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"filter\": [\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"NOT_IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"limit\": \"<integer>\",\n  \"measures\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timeFilter\": {\n    \"from\": \"1969-06-20\",\n    \"to\": \"1989-04-20\"\n  },\n  \"comparisonTimeFilter\": {\n    \"from\": \"2020-01-14\",\n    \"to\": \"1993-11-11\"\n  },\n  \"orderBy\": {\n    \"direction\": \"ASC\",\n    \"field\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rows\": [\n    {\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 1429.4636541094042,\n        \"key_1\": 3486.3852201617674,\n        \"key_2\": 2524.3606213925286\n      },\n      \"comparison\": {\n        \"key_0\": 5716.961308534487,\n        \"key_1\": 301.3626146232384\n      }\n    },\n    {\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 2557.661113552753\n      },\n      \"comparison\": {\n        \"key_0\": 1528.7014044013724\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06fcb2d0-c170-43cb-85b6-baeaff384621",
+              "name": "Unexpected internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"filter\": [\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"NOT_IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"limit\": \"<integer>\",\n  \"measures\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timeFilter\": {\n    \"from\": \"1969-06-20\",\n    \"to\": \"1989-04-20\"\n  },\n  \"comparisonTimeFilter\": {\n    \"from\": \"2020-01-14\",\n    \"to\": \"1993-11-11\"\n  },\n  \"orderBy\": {\n    \"direction\": \"ASC\",\n    \"field\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rows\": [\n    {\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 1429.4636541094042,\n        \"key_1\": 3486.3852201617674,\n        \"key_2\": 2524.3606213925286\n      },\n      \"comparison\": {\n        \"key_0\": 5716.961308534487,\n        \"key_1\": 301.3626146232384\n      }\n    },\n    {\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 2557.661113552753\n      },\n      \"comparison\": {\n        \"key_0\": 1528.7014044013724\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b1541cd-6e2f-428e-8bce-ad0c494c12b7",
+              "name": "Backend timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attributes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"filter\": [\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"NOT_IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"attribute\": \"string\",\n      \"operator\": \"IN\",\n      \"values\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"limit\": \"<integer>\",\n  \"measures\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timeFilter\": {\n    \"from\": \"1969-06-20\",\n    \"to\": \"1989-04-20\"\n  },\n  \"comparisonTimeFilter\": {\n    \"from\": \"2020-01-14\",\n    \"to\": \"1993-11-11\"\n  },\n  \"orderBy\": {\n    \"direction\": \"ASC\",\n    \"field\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rows\": [\n    {\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 1429.4636541094042,\n        \"key_1\": 3486.3852201617674,\n        \"key_2\": 2524.3606213925286\n      },\n      \"comparison\": {\n        \"key_0\": 5716.961308534487,\n        \"key_1\": 301.3626146232384\n      }\n    },\n    {\n      \"attributes\": {\n        \"key_0\": \"string\"\n      },\n      \"values\": {\n        \"key_0\": 2557.661113552753\n      },\n      \"comparison\": {\n        \"key_0\": 1528.7014044013724\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4c01fc7-33e6-483b-b8e4-ca2407aa5cd0",
+          "name": "Get data model schema",
+          "request": {
+            "name": "Get data model schema",
+            "description": {
+              "content": "\nReturn the data model schema available to your tenant.\n\nCall this endpoint before `POST /data/v1/query` to discover which attribute and measure codes can be queried. The response contains localized names (`nameEN`, `nameDE`) for display and stable `code` values for query requests. The schema only includes fields available for your tenant.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "v1",
+                "schema"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25c86090-baa7-46cd-ac8b-a0e335252d63",
+              "name": "Schema retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"attributes\": [\n    {\n      \"code\": \"string\",\n      \"nameDE\": \"string\",\n      \"nameEN\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"nameDE\": \"string\",\n      \"nameEN\": \"string\"\n    }\n  ],\n  \"measures\": [\n    {\n      \"code\": \"string\",\n      \"nameDE\": \"string\",\n      \"nameEN\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"nameDE\": \"string\",\n      \"nameEN\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19e000bc-ebcf-42ed-bde3-b247b30b7327",
+              "name": "Unexpected internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"attributes\": [\n    {\n      \"code\": \"string\",\n      \"nameDE\": \"string\",\n      \"nameEN\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"nameDE\": \"string\",\n      \"nameEN\": \"string\"\n    }\n  ],\n  \"measures\": [\n    {\n      \"code\": \"string\",\n      \"nameDE\": \"string\",\n      \"nameEN\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"nameDE\": \"string\",\n      \"nameEN\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.minubo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e250d398-5ccc-4d84-95f5-47f3e67e232f",
+    "name": "Minubo Auth Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Getting Started\n\nBase URL: `https://api.minubo.com`\n\nThis reference combines multiple service specifications into one API view, including Auth, ETL, and the Data API.\n\n## Requirements\n\nTo use the minubo API, you need to have a valid token ID and token secret. Those can be obtained from the minubo Application by navigating to [Settings -> API Credentials](https://app.minubo.com/#/settings/tenant/apicredentials).\n## Authentication\n\nCreate a JWT using `POST /auth/v1/token`:\n\n```bash\ncurl -X POST \"https://api.minubo.com/auth/v1/token\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"tokenId\":\"<token-id>\",\"tokenSecret\":\"<token-secret>\"}'\n```\n\nUse the returned token as a bearer token for protected endpoints.\n\n## Examples\n\n### Trigger ETL and check status\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\n# Trigger ETL process\nprocess_uuid = requests.post(\n    f\"{base}/etl/v1/process/start\",\n    headers=headers,\n).json()[\"processUuid\"]\n\n# Check status\nstatus = requests.get(\n    f\"{base}/etl/v1/process/status/{process_uuid}\",\n    headers=headers,\n).json()\nprint(status)\n```\n\n### Inspect schema and run a data query\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\nschema = requests.get(\n    f\"{base}/data/v1/schema\",\n    headers=headers,\n).json()\n\nprint(schema[\"attributes\"][0])\n\nresult = requests.post(\n    f\"{base}/data/v1/query\",\n    headers={**headers, \"Content-Type\": \"application/json\"},\n    json={\n        \"attributes\": [\"prdNumber\"],\n        \"measures\": [\"omsOrdNum\"],\n        \"timeFilter\": {\n            \"from\": \"2026-01-01\",\n            \"to\": \"2026-01-31\"\n        },\n        \"limit\": 1000\n    },\n).json()\n\nprint(result)\n```\n\n### Troubleshooting\n\n- `401 Unauthorized`: generate a new token and update the bearer header.\n- `429 Too Many Requests`: Data API endpoints are rate-limited to 50 requests per 10 minutes per API token.",
+      "type": "text/plain"
+    }
+  }
+}

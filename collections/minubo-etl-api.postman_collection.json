@@ -1,0 +1,1116 @@
+{
+  "item": [
+    {
+      "id": "0e165749-11aa-4480-91e3-c5b58f875163",
+      "name": "ETL",
+      "description": {
+        "content": "ETL endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a141709b-bf6b-4000-a049-e0e4ae6751c8",
+          "name": "Start an ETL process",
+          "request": {
+            "name": "Start an ETL process",
+            "description": {},
+            "url": {
+              "path": [
+                "etl",
+                "v1",
+                "process",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "forceFullLoad",
+                  "value": "false",
+                  "description": "Force a full load (default: false)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f07e9a82-872e-4c3f-867c-8738cb0ae1a1",
+              "name": "Process started",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "forceFullLoad",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"bd132a88-9541-63a0-0139-952860ed1050\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3006095-e51b-45c7-89f2-51f3ceef3606",
+              "name": "Invalid request, missing parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "forceFullLoad",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"bd132a88-9541-63a0-0139-952860ed1050\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "290277dc-f730-4b5f-ad04-27c0efd49203",
+              "name": "Unexpected internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "forceFullLoad",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"bd132a88-9541-63a0-0139-952860ed1050\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0040ad86-ab97-4157-8633-63d1ad66e8f9",
+          "name": "Get ETL Status History",
+          "request": {
+            "name": "Get ETL Status History",
+            "description": {},
+            "url": {
+              "path": [
+                "etl",
+                "v1",
+                "status",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "918c68e2-f628-4e9b-b425-2d90b8b4d500",
+              "name": "ETL status history for the last 30 days including today",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "status",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"date\": \"2026-01-06\",\n  \"startedDateTime\": \"1988-11-07T20:46:08.698Z\",\n  \"finishingDateTime\": \"1955-08-29T15:09:12.216Z\",\n  \"etaDateTime\": \"2002-11-27T07:16:54.891Z\",\n  \"statusCode\": \"no_daily_update\",\n  \"stages\": [\n    {\n      \"stageCode\": \"extract\",\n      \"startDateTime\": 1799,\n      \"endDateTime\": 1898\n    },\n    {\n      \"stageCode\": \"load\",\n      \"startDateTime\": 9561,\n      \"endDateTime\": 9496\n    }\n  ],\n  \"targetDateTime\": \"1984-06-09T12:56:57.034Z\",\n  \"targetResultCode\": \"not_processed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "123b3f33-fefd-4655-887c-561524a00f7e",
+              "name": "Invalid request, missing parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "status",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"1995-11-02\",\n    \"startedDateTime\": \"1985-12-08T17:11:01.674Z\",\n    \"finishingDateTime\": \"1989-03-25T05:13:03.147Z\",\n    \"etaDateTime\": \"1947-08-06T00:14:07.176Z\",\n    \"statusCode\": \"no_daily_update\",\n    \"stages\": [\n      {\n        \"stageCode\": \"abort\",\n        \"startDateTime\": 3528,\n        \"endDateTime\": 3857\n      },\n      {\n        \"stageCode\": \"extract\",\n        \"startDateTime\": 3450,\n        \"endDateTime\": 8434\n      }\n    ],\n    \"targetDateTime\": \"1986-02-24T01:43:31.012Z\",\n    \"targetResultCode\": \"not_processed\"\n  },\n  {\n    \"date\": \"2003-05-14\",\n    \"startedDateTime\": \"1980-04-06T17:29:15.603Z\",\n    \"finishingDateTime\": \"1973-02-23T06:42:40.773Z\",\n    \"etaDateTime\": \"2000-01-19T10:58:23.391Z\",\n    \"statusCode\": \"done\",\n    \"stages\": [\n      {\n        \"stageCode\": \"transform\",\n        \"startDateTime\": 8082,\n        \"endDateTime\": 2908\n      },\n      {\n        \"stageCode\": \"transform\",\n        \"startDateTime\": 2162,\n        \"endDateTime\": 2543\n      }\n    ],\n    \"targetDateTime\": \"2008-02-02T23:31:45.154Z\",\n    \"targetResultCode\": \"delayed\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac832b40-e365-475b-a77e-69a69917cae8",
+              "name": "Unexpected internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "status",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"1995-11-02\",\n    \"startedDateTime\": \"1985-12-08T17:11:01.674Z\",\n    \"finishingDateTime\": \"1989-03-25T05:13:03.147Z\",\n    \"etaDateTime\": \"1947-08-06T00:14:07.176Z\",\n    \"statusCode\": \"no_daily_update\",\n    \"stages\": [\n      {\n        \"stageCode\": \"abort\",\n        \"startDateTime\": 3528,\n        \"endDateTime\": 3857\n      },\n      {\n        \"stageCode\": \"extract\",\n        \"startDateTime\": 3450,\n        \"endDateTime\": 8434\n      }\n    ],\n    \"targetDateTime\": \"1986-02-24T01:43:31.012Z\",\n    \"targetResultCode\": \"not_processed\"\n  },\n  {\n    \"date\": \"2003-05-14\",\n    \"startedDateTime\": \"1980-04-06T17:29:15.603Z\",\n    \"finishingDateTime\": \"1973-02-23T06:42:40.773Z\",\n    \"etaDateTime\": \"2000-01-19T10:58:23.391Z\",\n    \"statusCode\": \"done\",\n    \"stages\": [\n      {\n        \"stageCode\": \"transform\",\n        \"startDateTime\": 8082,\n        \"endDateTime\": 2908\n      },\n      {\n        \"stageCode\": \"transform\",\n        \"startDateTime\": 2162,\n        \"endDateTime\": 2543\n      }\n    ],\n    \"targetDateTime\": \"2008-02-02T23:31:45.154Z\",\n    \"targetResultCode\": \"delayed\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ddc3eb5-a643-47b3-9391-f5ff42b80942",
+          "name": "Get Today's ETL Status",
+          "request": {
+            "name": "Get Today's ETL Status",
+            "description": {},
+            "url": {
+              "path": [
+                "etl",
+                "v1",
+                "status",
+                "current"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "17dceb46-4376-4bff-bcf2-ccf3213145d7",
+              "name": "Current ETL day",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "status",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"date\": \"2026-01-06\",\n  \"startedDateTime\": \"1988-11-07T20:46:08.698Z\",\n  \"finishingDateTime\": \"1955-08-29T15:09:12.216Z\",\n  \"etaDateTime\": \"2002-11-27T07:16:54.891Z\",\n  \"statusCode\": \"no_daily_update\",\n  \"stages\": [\n    {\n      \"stageCode\": \"extract\",\n      \"startDateTime\": 1799,\n      \"endDateTime\": 1898\n    },\n    {\n      \"stageCode\": \"load\",\n      \"startDateTime\": 9561,\n      \"endDateTime\": 9496\n    }\n  ],\n  \"targetDateTime\": \"1984-06-09T12:56:57.034Z\",\n  \"targetResultCode\": \"not_processed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68ee39b7-a8e4-4b7c-a376-4c6a25160df1",
+              "name": "Invalid request, missing parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "status",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"date\": \"2026-01-06\",\n  \"startedDateTime\": \"1988-11-07T20:46:08.698Z\",\n  \"finishingDateTime\": \"1955-08-29T15:09:12.216Z\",\n  \"etaDateTime\": \"2002-11-27T07:16:54.891Z\",\n  \"statusCode\": \"no_daily_update\",\n  \"stages\": [\n    {\n      \"stageCode\": \"extract\",\n      \"startDateTime\": 1799,\n      \"endDateTime\": 1898\n    },\n    {\n      \"stageCode\": \"load\",\n      \"startDateTime\": 9561,\n      \"endDateTime\": 9496\n    }\n  ],\n  \"targetDateTime\": \"1984-06-09T12:56:57.034Z\",\n  \"targetResultCode\": \"not_processed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e3a1f34-d8ad-43d0-b075-c9ad15b706e2",
+              "name": "No ETL schedule is planned for the current day",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "status",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"date\": \"2026-01-06\",\n  \"startedDateTime\": \"1988-11-07T20:46:08.698Z\",\n  \"finishingDateTime\": \"1955-08-29T15:09:12.216Z\",\n  \"etaDateTime\": \"2002-11-27T07:16:54.891Z\",\n  \"statusCode\": \"no_daily_update\",\n  \"stages\": [\n    {\n      \"stageCode\": \"extract\",\n      \"startDateTime\": 1799,\n      \"endDateTime\": 1898\n    },\n    {\n      \"stageCode\": \"load\",\n      \"startDateTime\": 9561,\n      \"endDateTime\": 9496\n    }\n  ],\n  \"targetDateTime\": \"1984-06-09T12:56:57.034Z\",\n  \"targetResultCode\": \"not_processed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1b0002d-9b4b-47a3-bab9-6d0020b29549",
+              "name": "Unexpected internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "status",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"date\": \"2026-01-06\",\n  \"startedDateTime\": \"1988-11-07T20:46:08.698Z\",\n  \"finishingDateTime\": \"1955-08-29T15:09:12.216Z\",\n  \"etaDateTime\": \"2002-11-27T07:16:54.891Z\",\n  \"statusCode\": \"no_daily_update\",\n  \"stages\": [\n    {\n      \"stageCode\": \"extract\",\n      \"startDateTime\": 1799,\n      \"endDateTime\": 1898\n    },\n    {\n      \"stageCode\": \"load\",\n      \"startDateTime\": 9561,\n      \"endDateTime\": 9496\n    }\n  ],\n  \"targetDateTime\": \"1984-06-09T12:56:57.034Z\",\n  \"targetResultCode\": \"not_processed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "592fc90c-be0c-49d8-bc74-111b5a4278f2",
+          "name": "Get ETL process status by process UUID",
+          "request": {
+            "name": "Get ETL process status by process UUID",
+            "description": {},
+            "url": {
+              "path": [
+                "etl",
+                "v1",
+                "process",
+                "status",
+                ":processUuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "processUuid",
+                  "description": "(Required) Process UUID returned by /etl/v1/process/start"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c171214-def7-4762-871c-c81aa8ebb327",
+              "name": "Process status found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "status",
+                    ":processUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "processUuid",
+                      "description": "(Required) Process UUID returned by /etl/v1/process/start"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"707f2510-6293-34c7-d23d-1f4de0107682\",\n  \"statusCode\": \"aborted\",\n  \"startedDateTime\": \"2014-10-13T00:00:32.799Z\",\n  \"creationDateTime\": \"1952-09-20T07:32:25.812Z\",\n  \"followupProcessUuid\": \"40eb8840-9e62-7f5f-1388-873f479430bb\",\n  \"steps\": [\n    {\n      \"stepCode\": \"load\",\n      \"startedDateTime\": \"1950-12-17T23:05:01.610Z\",\n      \"finishedDateTime\": \"1950-09-25T15:30:15.019Z\",\n      \"statusCode\": \"running\"\n    },\n    {\n      \"stepCode\": \"transform\",\n      \"startedDateTime\": \"1974-04-22T05:44:15.188Z\",\n      \"finishedDateTime\": \"1950-09-15T14:28:02.417Z\",\n      \"statusCode\": \"running\"\n    }\n  ],\n  \"logs\": [\n    {\n      \"stageCode\": \"abort\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1966-08-04T11:07:41.417Z\",\n      \"statusCode\": \"skipped\"\n    },\n    {\n      \"stageCode\": \"load\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1980-06-30T00:30:00.698Z\",\n      \"statusCode\": \"skipped\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0cc0fcd-4c22-4d2e-a609-b24b9709bc88",
+              "name": "Invalid request, missing parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "status",
+                    ":processUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "processUuid",
+                      "description": "(Required) Process UUID returned by /etl/v1/process/start"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"707f2510-6293-34c7-d23d-1f4de0107682\",\n  \"statusCode\": \"aborted\",\n  \"startedDateTime\": \"2014-10-13T00:00:32.799Z\",\n  \"creationDateTime\": \"1952-09-20T07:32:25.812Z\",\n  \"followupProcessUuid\": \"40eb8840-9e62-7f5f-1388-873f479430bb\",\n  \"steps\": [\n    {\n      \"stepCode\": \"load\",\n      \"startedDateTime\": \"1950-12-17T23:05:01.610Z\",\n      \"finishedDateTime\": \"1950-09-25T15:30:15.019Z\",\n      \"statusCode\": \"running\"\n    },\n    {\n      \"stepCode\": \"transform\",\n      \"startedDateTime\": \"1974-04-22T05:44:15.188Z\",\n      \"finishedDateTime\": \"1950-09-15T14:28:02.417Z\",\n      \"statusCode\": \"running\"\n    }\n  ],\n  \"logs\": [\n    {\n      \"stageCode\": \"abort\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1966-08-04T11:07:41.417Z\",\n      \"statusCode\": \"skipped\"\n    },\n    {\n      \"stageCode\": \"load\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1980-06-30T00:30:00.698Z\",\n      \"statusCode\": \"skipped\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e132451-c49e-4992-94e9-b1315871e635",
+              "name": "Process not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "status",
+                    ":processUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "processUuid",
+                      "description": "(Required) Process UUID returned by /etl/v1/process/start"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"707f2510-6293-34c7-d23d-1f4de0107682\",\n  \"statusCode\": \"aborted\",\n  \"startedDateTime\": \"2014-10-13T00:00:32.799Z\",\n  \"creationDateTime\": \"1952-09-20T07:32:25.812Z\",\n  \"followupProcessUuid\": \"40eb8840-9e62-7f5f-1388-873f479430bb\",\n  \"steps\": [\n    {\n      \"stepCode\": \"load\",\n      \"startedDateTime\": \"1950-12-17T23:05:01.610Z\",\n      \"finishedDateTime\": \"1950-09-25T15:30:15.019Z\",\n      \"statusCode\": \"running\"\n    },\n    {\n      \"stepCode\": \"transform\",\n      \"startedDateTime\": \"1974-04-22T05:44:15.188Z\",\n      \"finishedDateTime\": \"1950-09-15T14:28:02.417Z\",\n      \"statusCode\": \"running\"\n    }\n  ],\n  \"logs\": [\n    {\n      \"stageCode\": \"abort\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1966-08-04T11:07:41.417Z\",\n      \"statusCode\": \"skipped\"\n    },\n    {\n      \"stageCode\": \"load\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1980-06-30T00:30:00.698Z\",\n      \"statusCode\": \"skipped\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5063f247-c338-4c4f-b4ef-de083a46a7f1",
+              "name": "Unexpected internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "status",
+                    ":processUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "processUuid",
+                      "description": "(Required) Process UUID returned by /etl/v1/process/start"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"707f2510-6293-34c7-d23d-1f4de0107682\",\n  \"statusCode\": \"aborted\",\n  \"startedDateTime\": \"2014-10-13T00:00:32.799Z\",\n  \"creationDateTime\": \"1952-09-20T07:32:25.812Z\",\n  \"followupProcessUuid\": \"40eb8840-9e62-7f5f-1388-873f479430bb\",\n  \"steps\": [\n    {\n      \"stepCode\": \"load\",\n      \"startedDateTime\": \"1950-12-17T23:05:01.610Z\",\n      \"finishedDateTime\": \"1950-09-25T15:30:15.019Z\",\n      \"statusCode\": \"running\"\n    },\n    {\n      \"stepCode\": \"transform\",\n      \"startedDateTime\": \"1974-04-22T05:44:15.188Z\",\n      \"finishedDateTime\": \"1950-09-15T14:28:02.417Z\",\n      \"statusCode\": \"running\"\n    }\n  ],\n  \"logs\": [\n    {\n      \"stageCode\": \"abort\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1966-08-04T11:07:41.417Z\",\n      \"statusCode\": \"skipped\"\n    },\n    {\n      \"stageCode\": \"load\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1980-06-30T00:30:00.698Z\",\n      \"statusCode\": \"skipped\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb292ddb-192b-4bd1-83a9-0373fb5b2fe2",
+          "name": "Get latest ETL process status",
+          "request": {
+            "name": "Get latest ETL process status",
+            "description": {},
+            "url": {
+              "path": [
+                "etl",
+                "v1",
+                "process",
+                "status",
+                "latest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b77e2f59-f7a5-4cbc-ac5d-006faefd32a1",
+              "name": "Process status found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "status",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"707f2510-6293-34c7-d23d-1f4de0107682\",\n  \"statusCode\": \"aborted\",\n  \"startedDateTime\": \"2014-10-13T00:00:32.799Z\",\n  \"creationDateTime\": \"1952-09-20T07:32:25.812Z\",\n  \"followupProcessUuid\": \"40eb8840-9e62-7f5f-1388-873f479430bb\",\n  \"steps\": [\n    {\n      \"stepCode\": \"load\",\n      \"startedDateTime\": \"1950-12-17T23:05:01.610Z\",\n      \"finishedDateTime\": \"1950-09-25T15:30:15.019Z\",\n      \"statusCode\": \"running\"\n    },\n    {\n      \"stepCode\": \"transform\",\n      \"startedDateTime\": \"1974-04-22T05:44:15.188Z\",\n      \"finishedDateTime\": \"1950-09-15T14:28:02.417Z\",\n      \"statusCode\": \"running\"\n    }\n  ],\n  \"logs\": [\n    {\n      \"stageCode\": \"abort\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1966-08-04T11:07:41.417Z\",\n      \"statusCode\": \"skipped\"\n    },\n    {\n      \"stageCode\": \"load\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1980-06-30T00:30:00.698Z\",\n      \"statusCode\": \"skipped\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a74ad52-445b-4af6-bcb0-77962929e6ba",
+              "name": "Invalid request, missing parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "status",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"707f2510-6293-34c7-d23d-1f4de0107682\",\n  \"statusCode\": \"aborted\",\n  \"startedDateTime\": \"2014-10-13T00:00:32.799Z\",\n  \"creationDateTime\": \"1952-09-20T07:32:25.812Z\",\n  \"followupProcessUuid\": \"40eb8840-9e62-7f5f-1388-873f479430bb\",\n  \"steps\": [\n    {\n      \"stepCode\": \"load\",\n      \"startedDateTime\": \"1950-12-17T23:05:01.610Z\",\n      \"finishedDateTime\": \"1950-09-25T15:30:15.019Z\",\n      \"statusCode\": \"running\"\n    },\n    {\n      \"stepCode\": \"transform\",\n      \"startedDateTime\": \"1974-04-22T05:44:15.188Z\",\n      \"finishedDateTime\": \"1950-09-15T14:28:02.417Z\",\n      \"statusCode\": \"running\"\n    }\n  ],\n  \"logs\": [\n    {\n      \"stageCode\": \"abort\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1966-08-04T11:07:41.417Z\",\n      \"statusCode\": \"skipped\"\n    },\n    {\n      \"stageCode\": \"load\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1980-06-30T00:30:00.698Z\",\n      \"statusCode\": \"skipped\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2fac4cd-2348-4e9d-9973-deaa2d6e761b",
+              "name": "Process not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "status",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"707f2510-6293-34c7-d23d-1f4de0107682\",\n  \"statusCode\": \"aborted\",\n  \"startedDateTime\": \"2014-10-13T00:00:32.799Z\",\n  \"creationDateTime\": \"1952-09-20T07:32:25.812Z\",\n  \"followupProcessUuid\": \"40eb8840-9e62-7f5f-1388-873f479430bb\",\n  \"steps\": [\n    {\n      \"stepCode\": \"load\",\n      \"startedDateTime\": \"1950-12-17T23:05:01.610Z\",\n      \"finishedDateTime\": \"1950-09-25T15:30:15.019Z\",\n      \"statusCode\": \"running\"\n    },\n    {\n      \"stepCode\": \"transform\",\n      \"startedDateTime\": \"1974-04-22T05:44:15.188Z\",\n      \"finishedDateTime\": \"1950-09-15T14:28:02.417Z\",\n      \"statusCode\": \"running\"\n    }\n  ],\n  \"logs\": [\n    {\n      \"stageCode\": \"abort\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1966-08-04T11:07:41.417Z\",\n      \"statusCode\": \"skipped\"\n    },\n    {\n      \"stageCode\": \"load\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1980-06-30T00:30:00.698Z\",\n      \"statusCode\": \"skipped\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8989a424-96a3-4034-9a2e-1e5e6f509e88",
+              "name": "Unexpected internal error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "etl",
+                    "v1",
+                    "process",
+                    "status",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"processUuid\": \"707f2510-6293-34c7-d23d-1f4de0107682\",\n  \"statusCode\": \"aborted\",\n  \"startedDateTime\": \"2014-10-13T00:00:32.799Z\",\n  \"creationDateTime\": \"1952-09-20T07:32:25.812Z\",\n  \"followupProcessUuid\": \"40eb8840-9e62-7f5f-1388-873f479430bb\",\n  \"steps\": [\n    {\n      \"stepCode\": \"load\",\n      \"startedDateTime\": \"1950-12-17T23:05:01.610Z\",\n      \"finishedDateTime\": \"1950-09-25T15:30:15.019Z\",\n      \"statusCode\": \"running\"\n    },\n    {\n      \"stepCode\": \"transform\",\n      \"startedDateTime\": \"1974-04-22T05:44:15.188Z\",\n      \"finishedDateTime\": \"1950-09-15T14:28:02.417Z\",\n      \"statusCode\": \"running\"\n    }\n  ],\n  \"logs\": [\n    {\n      \"stageCode\": \"abort\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1966-08-04T11:07:41.417Z\",\n      \"statusCode\": \"skipped\"\n    },\n    {\n      \"stageCode\": \"load\",\n      \"interfaceCode\": \"string\",\n      \"resultDescription\": \"string\",\n      \"errorMessage\": \"string\",\n      \"taskCode\": \"string\",\n      \"logDateTime\": \"1980-06-30T00:30:00.698Z\",\n      \"statusCode\": \"skipped\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.minubo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "708f0785-ad20-4573-905c-1aa769112aba",
+    "name": "Minubo Auth ETL API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Getting Started\n\nBase URL: `https://api.minubo.com`\n\nThis reference combines multiple service specifications into one API view, including Auth, ETL, and the Data API.\n\n## Requirements\n\nTo use the minubo API, you need to have a valid token ID and token secret. Those can be obtained from the minubo Application by navigating to [Settings -> API Credentials](https://app.minubo.com/#/settings/tenant/apicredentials).\n## Authentication\n\nCreate a JWT using `POST /auth/v1/token`:\n\n```bash\ncurl -X POST \"https://api.minubo.com/auth/v1/token\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"tokenId\":\"<token-id>\",\"tokenSecret\":\"<token-secret>\"}'\n```\n\nUse the returned token as a bearer token for protected endpoints.\n\n## Examples\n\n### Trigger ETL and check status\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\n# Trigger ETL process\nprocess_uuid = requests.post(\n    f\"{base}/etl/v1/process/start\",\n    headers=headers,\n).json()[\"processUuid\"]\n\n# Check status\nstatus = requests.get(\n    f\"{base}/etl/v1/process/status/{process_uuid}\",\n    headers=headers,\n).json()\nprint(status)\n```\n\n### Inspect schema and run a data query\n\n```python\nimport requests\n\nbase = \"https://api.minubo.com\"\n\n# Get valid token\ntoken = requests.post(\n    f\"{base}/auth/v1/token\",\n    json={\"tokenId\": \"<token-id>\", \"tokenSecret\": \"<token-secret>\"},\n).json()[\"token\"]\n\nheaders = {\"Authorization\": f\"Bearer {token}\"}\n\nschema = requests.get(\n    f\"{base}/data/v1/schema\",\n    headers=headers,\n).json()\n\nprint(schema[\"attributes\"][0])\n\nresult = requests.post(\n    f\"{base}/data/v1/query\",\n    headers={**headers, \"Content-Type\": \"application/json\"},\n    json={\n        \"attributes\": [\"prdNumber\"],\n        \"measures\": [\"omsOrdNum\"],\n        \"timeFilter\": {\n            \"from\": \"2026-01-01\",\n            \"to\": \"2026-01-31\"\n        },\n        \"limit\": 1000\n    },\n).json()\n\nprint(result)\n```\n\n### Troubleshooting\n\n- `401 Unauthorized`: generate a new token and update the bearer header.\n- `429 Too Many Requests`: Data API endpoints are rate-limited to 50 requests per 10 minutes per API token.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Minubo Auth Data API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a data query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.minubo.com/data/v1/query",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nExecute a query against your minubo data.\n\nUse `GET /data/v1/schema` first to discover the attributes and measures available for your account. The schema response contains the field `code` values that can be used in `attributes`, `measures`, filters, and ordering. Authenticate with `/auth/v1/token` and send the returned JWT as a Bearer token.\n\n**Query limitations:**\n- At most 20 `attributes` and 20 `measures` are allowed per request.\n- `limit` must be between 0 and 200000.\n- `timeFilter` is req"
+        },
+        {
+          "info": {
+            "name": "Get data model schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.minubo.com/data/v1/schema"
+          },
+          "docs": "\nReturn the data model schema available to your tenant.\n\nCall this endpoint before `POST /data/v1/query` to discover which attribute and measure codes can be queried. The response contains localized names (`nameEN`, `nameDE`) for display and stable `code` values for query requests. The schema only includes fields available for your tenant.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

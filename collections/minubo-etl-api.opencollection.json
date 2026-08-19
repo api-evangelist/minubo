@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Minubo Auth ETL API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ETL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start an ETL process",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.minubo.com/etl/v1/process/start",
+            "params": [
+              {
+                "name": "forceFullLoad",
+                "value": "",
+                "type": "query",
+                "description": "Force a full load (default: false)"
+              }
+            ]
+          },
+          "docs": "Start an ETL process"
+        },
+        {
+          "info": {
+            "name": "Get ETL Status History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.minubo.com/etl/v1/status/report"
+          },
+          "docs": "Get ETL Status History"
+        },
+        {
+          "info": {
+            "name": "Get Today's ETL Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.minubo.com/etl/v1/status/current"
+          },
+          "docs": "Get Today's ETL Status"
+        },
+        {
+          "info": {
+            "name": "Get ETL process status by process UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.minubo.com/etl/v1/process/status/:processUuid",
+            "params": [
+              {
+                "name": "processUuid",
+                "value": "",
+                "type": "path",
+                "description": "Process UUID returned by /etl/v1/process/start"
+              }
+            ]
+          },
+          "docs": "Get ETL process status by process UUID"
+        },
+        {
+          "info": {
+            "name": "Get latest ETL process status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.minubo.com/etl/v1/process/status/latest"
+          },
+          "docs": "Get latest ETL process status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
