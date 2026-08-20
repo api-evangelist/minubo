@@ -52,6 +52,8 @@ apis:
   humanURL: https://api.minubo.com/docs
   baseURL: https://api.minubo.com
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
