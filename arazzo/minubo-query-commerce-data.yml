@@ -3,6 +3,17 @@ info:
   title: Query Minubo commerce data
   version: 1.0.0
   summary: Authenticate, discover the tenant schema, and run a data query.
+  x-realizes-capability-ids:
+  - BC-610.50
+  x-capability-derivation:
+    method: 'deterministic join: sourceDescriptions -> per-tag OpenAPI -> tag/capability edge. No classification at this step.'
+    min_confidence: 0.7
+    sources:
+    - capability_id: BC-610.50
+      capability_name: Analytics & BI Management
+      spec: minubo-data-api-openapi.yml
+      confidence: 0.7
+    model: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities, CC BY 4.0
 sourceDescriptions:
 - name: authApi
   url: ../openapi/minubo-auth-api-openapi.yml
