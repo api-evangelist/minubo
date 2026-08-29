@@ -8,6 +8,18 @@ description: >-
   authenticate with a JWT, trigger and monitor data loads, discover their queryable
   schema, and run queries against their modeled commerce data, plus connectors to tools
   like Power BI, Superset, n8n, and LLMs.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
