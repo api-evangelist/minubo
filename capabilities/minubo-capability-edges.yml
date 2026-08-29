@@ -1,0 +1,25 @@
+slug: minubo
+provider: Minubo
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Retail & Consumer Goods
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Data
+  spec_file: minubo-data-api-openapi.yml
+  capability_id: BC-610.50
+  capability_id_l1: BC-610
+  capability_name: Analytics & BI Management
+  confidence: 0.7
+  evidence: POST /data/v1/query 'Execute a data query'; GET /data/v1/schema 'Get data model schema'; vendor
+    is a 'business-intelligence platform for e-commerce and retail'
+  reason: Query and data-model discovery endpoints of a BI platform, used to retrieve modelled commerce
+    metrics for reporting — analytics and BI delivery. Generic query surface keeps confidence moderate.

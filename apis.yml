@@ -91,6 +91,9 @@ apis:
   - type: OpenAPI
     url: openapi/minubo-etl-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/minubo-capability-edges.yml
+  name: Minubo Business Capability Map
 - type: Overlay
   url: overlays/minubo-api-overlay.yaml
 - type: Website
