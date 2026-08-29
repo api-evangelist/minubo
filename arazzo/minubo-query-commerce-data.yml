@@ -4,63 +4,66 @@ info:
   version: 1.0.0
   summary: Authenticate, discover the tenant schema, and run a data query.
 sourceDescriptions:
-  - name: minubo
-    url: ../openapi/minubo-api-openapi-original.json
-    type: openapi
+- name: authApi
+  url: ../openapi/minubo-auth-api-openapi.yml
+  type: openapi
+- name: dataApi
+  url: ../openapi/minubo-data-api-openapi.yml
+  type: openapi
 workflows:
-  - workflowId: query-commerce-data
-    summary: Get a token, read the queryable schema, then execute a data query.
-    inputs:
-      type: object
-      required: [tokenId, tokenSecret]
-      properties:
-        tokenId:
-          type: string
-        tokenSecret:
-          type: string
-        from:
-          type: string
-          default: '2026-01-01'
-        to:
-          type: string
-          default: '2026-01-31'
-    steps:
-      - stepId: authenticate
-        operationId: auth_authenticateToken
-        requestBody:
-          contentType: application/json
-          payload:
-            tokenId: $inputs.tokenId
-            tokenSecret: $inputs.tokenSecret
-        outputs:
-          token: $response.body#/token
-      - stepId: get-schema
-        operationId: data_getSchema
-        parameters:
-          - name: Authorization
-            in: header
-            value: "Bearer {$steps.authenticate.outputs.token}"
-        successCriteria:
-          - condition: $statusCode == 200
-      - stepId: run-query
-        operationId: data_query
-        parameters:
-          - name: Authorization
-            in: header
-            value: "Bearer {$steps.authenticate.outputs.token}"
-        requestBody:
-          contentType: application/json
-          payload:
-            attributes: ["prdNumber"]
-            measures: ["omsOrdNum"]
-            timeFilter:
-              from: $inputs.from
-              to: $inputs.to
-            filter: []
-            limit: 1000
-        successCriteria:
-          - condition: $statusCode == 200
-        outputs:
-          rows: $response.body#/rows
+- workflowId: query-commerce-data
+  summary: Get a token, read the queryable schema, then execute a data query.
+  inputs:
+    type: object
+    required: [tokenId, tokenSecret]
+    properties:
+      tokenId:
+        type: string
+      tokenSecret:
+        type: string
+      from:
+        type: string
+        default: '2026-01-01'
+      to:
+        type: string
+        default: '2026-01-31'
+  steps:
+  - stepId: authenticate
+    operationId: auth_authenticateToken
+    requestBody:
+      contentType: application/json
+      payload:
+        tokenId: $inputs.tokenId
+        tokenSecret: $inputs.tokenSecret
     outputs:
-      rows: $steps.run-query.outputs.rows
+      token: $response.body#/token
+  - stepId: get-schema
+    operationId: data_getSchema
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer {$steps.authenticate.outputs.token}"
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: run-query
+    operationId: data_query
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer {$steps.authenticate.outputs.token}"
+    requestBody:
+      contentType: application/json
+      payload:
+        attributes: ["prdNumber"]
+        measures: ["omsOrdNum"]
+        timeFilter:
+          from: $inputs.from
+          to: $inputs.to
+        filter: []
+        limit: 1000
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      rows: $response.body#/rows
+  outputs:
+    rows: $steps.run-query.outputs.rows

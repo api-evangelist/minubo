@@ -4,59 +4,62 @@ info:
   version: 1.0.0
   summary: Authenticate, start an ETL process, and read its status.
 sourceDescriptions:
-  - name: minubo
-    url: ../openapi/minubo-api-openapi-original.json
-    type: openapi
+- name: authApi
+  url: ../openapi/minubo-auth-api-openapi.yml
+  type: openapi
+- name: etlApi
+  url: ../openapi/minubo-etl-api-openapi.yml
+  type: openapi
 workflows:
-  - workflowId: trigger-etl-and-monitor
-    summary: Get a token, start an ETL process, then poll its status by UUID.
-    inputs:
-      type: object
-      required: [tokenId, tokenSecret]
-      properties:
-        tokenId:
-          type: string
-        tokenSecret:
-          type: string
-        forceFullLoad:
-          type: boolean
-          default: false
-    steps:
-      - stepId: authenticate
-        operationId: auth_authenticateToken
-        requestBody:
-          contentType: application/json
-          payload:
-            tokenId: $inputs.tokenId
-            tokenSecret: $inputs.tokenSecret
-        outputs:
-          token: $response.body#/token
-      - stepId: start-etl
-        operationId: etl_processStart
-        parameters:
-          - name: Authorization
-            in: header
-            value: "Bearer {$steps.authenticate.outputs.token}"
-          - name: forceFullLoad
-            in: query
-            value: $inputs.forceFullLoad
-        successCriteria:
-          - condition: $statusCode == 202
-        outputs:
-          processUuid: $response.body#/processUuid
-      - stepId: check-status
-        operationId: etl_getProcessStatus
-        parameters:
-          - name: Authorization
-            in: header
-            value: "Bearer {$steps.authenticate.outputs.token}"
-          - name: processUuid
-            in: path
-            value: $steps.start-etl.outputs.processUuid
-        successCriteria:
-          - condition: $statusCode == 200
-        outputs:
-          statusCode: $response.body#/statusCode
+- workflowId: trigger-etl-and-monitor
+  summary: Get a token, start an ETL process, then poll its status by UUID.
+  inputs:
+    type: object
+    required: [tokenId, tokenSecret]
+    properties:
+      tokenId:
+        type: string
+      tokenSecret:
+        type: string
+      forceFullLoad:
+        type: boolean
+        default: false
+  steps:
+  - stepId: authenticate
+    operationId: auth_authenticateToken
+    requestBody:
+      contentType: application/json
+      payload:
+        tokenId: $inputs.tokenId
+        tokenSecret: $inputs.tokenSecret
     outputs:
-      processUuid: $steps.start-etl.outputs.processUuid
-      statusCode: $steps.check-status.outputs.statusCode
+      token: $response.body#/token
+  - stepId: start-etl
+    operationId: etl_processStart
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer {$steps.authenticate.outputs.token}"
+    - name: forceFullLoad
+      in: query
+      value: $inputs.forceFullLoad
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      processUuid: $response.body#/processUuid
+  - stepId: check-status
+    operationId: etl_getProcessStatus
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer {$steps.authenticate.outputs.token}"
+    - name: processUuid
+      in: path
+      value: $steps.start-etl.outputs.processUuid
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      statusCode: $response.body#/statusCode
+  outputs:
+    processUuid: $steps.start-etl.outputs.processUuid
+    statusCode: $steps.check-status.outputs.statusCode
