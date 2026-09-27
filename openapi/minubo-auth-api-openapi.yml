@@ -40,17 +40,17 @@ paths:
                 $ref: '#/components/schemas/auth_AccessTokenResponse'
 components:
   schemas:
+    auth_AccessTokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
     auth_ApiTokenGrantRequest:
       type: object
       properties:
         tokenId:
           type: string
         tokenSecret:
-          type: string
-    auth_AccessTokenResponse:
-      type: object
-      properties:
-        token:
           type: string
   securitySchemes:
     etl_bearerAuth:

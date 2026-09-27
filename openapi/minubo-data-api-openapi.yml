@@ -109,37 +109,6 @@ paths:
                 $ref: '#/components/schemas/data_DataSchemaResponse'
 components:
   schemas:
-    data_DataSchemaFieldResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        nameEN:
-          type: string
-        nameDE:
-          type: string
-      required:
-      - code
-      - nameDE
-      - nameEN
-    data_DataQueryRow:
-      type: object
-      properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: string
-        values:
-          type: object
-          additionalProperties:
-            type: number
-        comparison:
-          type: object
-          additionalProperties:
-            type: number
-      required:
-      - attributes
-      - values
     data_DataQueryTimeFilterModel:
       type: object
       properties:
@@ -149,15 +118,6 @@ components:
         to:
           type: string
           format: date
-    data_DataQueryResponse:
-      type: object
-      properties:
-        rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/data_DataQueryRow'
-      required:
-      - rows
     data_DataSchemaResponse:
       type: object
       properties:
@@ -172,6 +132,27 @@ components:
       required:
       - attributes
       - measures
+    data_DataQueryOrderBy:
+      type: object
+      properties:
+        field:
+          type: string
+        direction:
+          type: string
+          enum:
+          - ASC
+          - DESC
+      required:
+      - direction
+    data_DataQueryResponse:
+      type: object
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/data_DataQueryRow'
+      required:
+      - rows
     data_DataQueryFilterEntry:
       type: object
       properties:
@@ -188,6 +169,19 @@ components:
           type: array
           items:
             type: string
+    data_DataSchemaFieldResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        nameEN:
+          type: string
+        nameDE:
+          type: string
+      required:
+      - code
+      - nameDE
+      - nameEN
     data_DataQueryRequest:
       type: object
       properties:
@@ -217,18 +211,24 @@ components:
       - filter
       - limit
       - measures
-    data_DataQueryOrderBy:
+    data_DataQueryRow:
       type: object
       properties:
-        field:
-          type: string
-        direction:
-          type: string
-          enum:
-          - ASC
-          - DESC
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        values:
+          type: object
+          additionalProperties:
+            type: number
+        comparison:
+          type: object
+          additionalProperties:
+            type: number
       required:
-      - direction
+      - attributes
+      - values
   securitySchemes:
     etl_bearerAuth:
       type: http

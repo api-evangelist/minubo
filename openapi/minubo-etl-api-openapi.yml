@@ -183,6 +183,120 @@ paths:
                 $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
 components:
   schemas:
+    etl_ETLProcessStartResponse:
+      type: object
+      properties:
+        processUuid:
+          type: string
+          format: uuid
+    etl_ETLProcessStatusResponse:
+      type: object
+      properties:
+        processUuid:
+          type: string
+          format: uuid
+        statusCode:
+          type: string
+          enum:
+          - error
+          - scheduled
+          - loading
+          - schematization
+          - integrating
+          - checking
+          - finished
+          - aborted
+          - killed
+        startedDateTime:
+          type: string
+          format: date-time
+        creationDateTime:
+          type: string
+          format: date-time
+        followupProcessUuid:
+          type: string
+          format: uuid
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/etl_ETLProcessStepResponse'
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/etl_ETLProcessLogResponse'
+    etl_ETLProcessLogResponse:
+      type: object
+      properties:
+        stageCode:
+          type: string
+          enum:
+          - abort
+          - start
+          - extract
+          - transform
+          - load
+          - check
+        interfaceCode:
+          type: string
+        resultDescription:
+          type: string
+        errorMessage:
+          type: string
+        taskCode:
+          type: string
+        logDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - running
+          - error
+          - success
+          - warning
+          - data_validation_warning
+          - extract_validation_warning
+          - skipped
+          - aborted
+    etl_ETLDayStageResponse:
+      type: object
+      properties:
+        stageCode:
+          type: string
+          enum:
+          - abort
+          - start
+          - extract
+          - transform
+          - load
+          - check
+        startDateTime:
+          type: integer
+          format: int64
+        endDateTime:
+          type: integer
+          format: int64
+    etl_ETLProcessStepResponse:
+      type: object
+      properties:
+        stepCode:
+          type: string
+          enum:
+          - extract
+          - transform
+          - load
+        startedDateTime:
+          type: string
+          format: date-time
+        finishedDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - running
+          - error
+          - success
     etl_ETLDayResponse:
       type: object
       properties:
@@ -219,120 +333,6 @@ components:
           - in_time
           - delayed
           - not_processed
-    etl_ETLProcessStepResponse:
-      type: object
-      properties:
-        stepCode:
-          type: string
-          enum:
-          - extract
-          - transform
-          - load
-        startedDateTime:
-          type: string
-          format: date-time
-        finishedDateTime:
-          type: string
-          format: date-time
-        statusCode:
-          type: string
-          enum:
-          - running
-          - error
-          - success
-    etl_ETLProcessStatusResponse:
-      type: object
-      properties:
-        processUuid:
-          type: string
-          format: uuid
-        statusCode:
-          type: string
-          enum:
-          - error
-          - scheduled
-          - loading
-          - schematization
-          - integrating
-          - checking
-          - finished
-          - aborted
-          - killed
-        startedDateTime:
-          type: string
-          format: date-time
-        creationDateTime:
-          type: string
-          format: date-time
-        followupProcessUuid:
-          type: string
-          format: uuid
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/etl_ETLProcessStepResponse'
-        logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/etl_ETLProcessLogResponse'
-    etl_ETLDayStageResponse:
-      type: object
-      properties:
-        stageCode:
-          type: string
-          enum:
-          - abort
-          - start
-          - extract
-          - transform
-          - load
-          - check
-        startDateTime:
-          type: integer
-          format: int64
-        endDateTime:
-          type: integer
-          format: int64
-    etl_ETLProcessLogResponse:
-      type: object
-      properties:
-        stageCode:
-          type: string
-          enum:
-          - abort
-          - start
-          - extract
-          - transform
-          - load
-          - check
-        interfaceCode:
-          type: string
-        resultDescription:
-          type: string
-        errorMessage:
-          type: string
-        taskCode:
-          type: string
-        logDateTime:
-          type: string
-          format: date-time
-        statusCode:
-          type: string
-          enum:
-          - running
-          - error
-          - success
-          - warning
-          - data_validation_warning
-          - extract_validation_warning
-          - skipped
-          - aborted
-    etl_ETLProcessStartResponse:
-      type: object
-      properties:
-        processUuid:
-          type: string
-          format: uuid
   securitySchemes:
     etl_bearerAuth:
       type: http
