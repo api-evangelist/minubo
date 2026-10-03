@@ -183,6 +183,115 @@ paths:
                 $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
 components:
   schemas:
+    etl_ETLDayResponse:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        startedDateTime:
+          type: string
+          format: date-time
+        finishingDateTime:
+          type: string
+          format: date-time
+        etaDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - done
+          - ongoing
+          - not_started
+          - on_hold
+          - no_daily_update
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/etl_ETLDayStageResponse'
+        targetDateTime:
+          type: string
+          format: date-time
+        targetResultCode:
+          type: string
+          enum:
+          - in_time
+          - delayed
+          - not_processed
+    etl_ETLDayStageResponse:
+      type: object
+      properties:
+        stageCode:
+          type: string
+          enum:
+          - abort
+          - start
+          - extract
+          - transform
+          - load
+          - check
+        startDateTime:
+          type: integer
+          format: int64
+        endDateTime:
+          type: integer
+          format: int64
+    etl_ETLProcessLogResponse:
+      type: object
+      properties:
+        stageCode:
+          type: string
+          enum:
+          - abort
+          - start
+          - extract
+          - transform
+          - load
+          - check
+        interfaceCode:
+          type: string
+        resultDescription:
+          type: string
+        errorMessage:
+          type: string
+        taskCode:
+          type: string
+        logDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - running
+          - error
+          - success
+          - warning
+          - data_validation_warning
+          - extract_validation_warning
+          - skipped
+          - aborted
+    etl_ETLProcessStepResponse:
+      type: object
+      properties:
+        stepCode:
+          type: string
+          enum:
+          - extract
+          - transform
+          - load
+        startedDateTime:
+          type: string
+          format: date-time
+        finishedDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - running
+          - error
+          - success
     etl_ETLProcessStartResponse:
       type: object
       properties:
@@ -224,115 +333,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/etl_ETLProcessLogResponse'
-    etl_ETLProcessLogResponse:
-      type: object
-      properties:
-        stageCode:
-          type: string
-          enum:
-          - abort
-          - start
-          - extract
-          - transform
-          - load
-          - check
-        interfaceCode:
-          type: string
-        resultDescription:
-          type: string
-        errorMessage:
-          type: string
-        taskCode:
-          type: string
-        logDateTime:
-          type: string
-          format: date-time
-        statusCode:
-          type: string
-          enum:
-          - running
-          - error
-          - success
-          - warning
-          - data_validation_warning
-          - extract_validation_warning
-          - skipped
-          - aborted
-    etl_ETLDayStageResponse:
-      type: object
-      properties:
-        stageCode:
-          type: string
-          enum:
-          - abort
-          - start
-          - extract
-          - transform
-          - load
-          - check
-        startDateTime:
-          type: integer
-          format: int64
-        endDateTime:
-          type: integer
-          format: int64
-    etl_ETLProcessStepResponse:
-      type: object
-      properties:
-        stepCode:
-          type: string
-          enum:
-          - extract
-          - transform
-          - load
-        startedDateTime:
-          type: string
-          format: date-time
-        finishedDateTime:
-          type: string
-          format: date-time
-        statusCode:
-          type: string
-          enum:
-          - running
-          - error
-          - success
-    etl_ETLDayResponse:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date
-        startedDateTime:
-          type: string
-          format: date-time
-        finishingDateTime:
-          type: string
-          format: date-time
-        etaDateTime:
-          type: string
-          format: date-time
-        statusCode:
-          type: string
-          enum:
-          - done
-          - ongoing
-          - not_started
-          - on_hold
-          - no_daily_update
-        stages:
-          type: array
-          items:
-            $ref: '#/components/schemas/etl_ETLDayStageResponse'
-        targetDateTime:
-          type: string
-          format: date-time
-        targetResultCode:
-          type: string
-          enum:
-          - in_time
-          - delayed
-          - not_processed
   securitySchemes:
     etl_bearerAuth:
       type: http

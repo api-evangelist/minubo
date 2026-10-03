@@ -109,15 +109,36 @@ paths:
                 $ref: '#/components/schemas/data_DataSchemaResponse'
 components:
   schemas:
-    data_DataQueryTimeFilterModel:
+    data_DataQueryOrderBy:
       type: object
       properties:
-        from:
+        field:
           type: string
-          format: date
-        to:
+        direction:
           type: string
-          format: date
+          enum:
+          - ASC
+          - DESC
+      required:
+      - direction
+    data_DataQueryRow:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        values:
+          type: object
+          additionalProperties:
+            type: number
+        comparison:
+          type: object
+          additionalProperties:
+            type: number
+      required:
+      - attributes
+      - values
     data_DataSchemaResponse:
       type: object
       properties:
@@ -132,18 +153,6 @@ components:
       required:
       - attributes
       - measures
-    data_DataQueryOrderBy:
-      type: object
-      properties:
-        field:
-          type: string
-        direction:
-          type: string
-          enum:
-          - ASC
-          - DESC
-      required:
-      - direction
     data_DataQueryResponse:
       type: object
       properties:
@@ -211,24 +220,15 @@ components:
       - filter
       - limit
       - measures
-    data_DataQueryRow:
+    data_DataQueryTimeFilterModel:
       type: object
       properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: string
-        values:
-          type: object
-          additionalProperties:
-            type: number
-        comparison:
-          type: object
-          additionalProperties:
-            type: number
-      required:
-      - attributes
-      - values
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
   securitySchemes:
     etl_bearerAuth:
       type: http
