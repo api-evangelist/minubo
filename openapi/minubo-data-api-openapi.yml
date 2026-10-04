@@ -109,18 +109,22 @@ paths:
                 $ref: '#/components/schemas/data_DataSchemaResponse'
 components:
   schemas:
-    data_DataQueryOrderBy:
+    data_DataQueryFilterEntry:
       type: object
       properties:
-        field:
+        attribute:
           type: string
-        direction:
+        operator:
           type: string
           enum:
-          - ASC
-          - DESC
-      required:
-      - direction
+          - IN
+          - NOT_IN
+          - EXISTS
+          - NOT_EXISTS
+        values:
+          type: array
+          items:
+            type: string
     data_DataQueryRow:
       type: object
       properties:
@@ -139,6 +143,15 @@ components:
       required:
       - attributes
       - values
+    data_DataQueryTimeFilterModel:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
     data_DataSchemaResponse:
       type: object
       properties:
@@ -153,31 +166,18 @@ components:
       required:
       - attributes
       - measures
-    data_DataQueryResponse:
+    data_DataQueryOrderBy:
       type: object
       properties:
-        rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/data_DataQueryRow'
-      required:
-      - rows
-    data_DataQueryFilterEntry:
-      type: object
-      properties:
-        attribute:
+        field:
           type: string
-        operator:
+        direction:
           type: string
           enum:
-          - IN
-          - NOT_IN
-          - EXISTS
-          - NOT_EXISTS
-        values:
-          type: array
-          items:
-            type: string
+          - ASC
+          - DESC
+      required:
+      - direction
     data_DataSchemaFieldResponse:
       type: object
       properties:
@@ -220,15 +220,15 @@ components:
       - filter
       - limit
       - measures
-    data_DataQueryTimeFilterModel:
+    data_DataQueryResponse:
       type: object
       properties:
-        from:
-          type: string
-          format: date
-        to:
-          type: string
-          format: date
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/data_DataQueryRow'
+      required:
+      - rows
   securitySchemes:
     etl_bearerAuth:
       type: http

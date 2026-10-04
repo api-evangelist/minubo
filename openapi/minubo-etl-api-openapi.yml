@@ -183,6 +183,40 @@ paths:
                 $ref: '#/components/schemas/etl_ETLProcessStatusResponse'
 components:
   schemas:
+    etl_ETLProcessLogResponse:
+      type: object
+      properties:
+        stageCode:
+          type: string
+          enum:
+          - abort
+          - start
+          - extract
+          - transform
+          - load
+          - check
+        interfaceCode:
+          type: string
+        resultDescription:
+          type: string
+        errorMessage:
+          type: string
+        taskCode:
+          type: string
+        logDateTime:
+          type: string
+          format: date-time
+        statusCode:
+          type: string
+          enum:
+          - running
+          - error
+          - success
+          - warning
+          - data_validation_warning
+          - extract_validation_warning
+          - skipped
+          - aborted
     etl_ETLDayResponse:
       type: object
       properties:
@@ -219,58 +253,6 @@ components:
           - in_time
           - delayed
           - not_processed
-    etl_ETLDayStageResponse:
-      type: object
-      properties:
-        stageCode:
-          type: string
-          enum:
-          - abort
-          - start
-          - extract
-          - transform
-          - load
-          - check
-        startDateTime:
-          type: integer
-          format: int64
-        endDateTime:
-          type: integer
-          format: int64
-    etl_ETLProcessLogResponse:
-      type: object
-      properties:
-        stageCode:
-          type: string
-          enum:
-          - abort
-          - start
-          - extract
-          - transform
-          - load
-          - check
-        interfaceCode:
-          type: string
-        resultDescription:
-          type: string
-        errorMessage:
-          type: string
-        taskCode:
-          type: string
-        logDateTime:
-          type: string
-          format: date-time
-        statusCode:
-          type: string
-          enum:
-          - running
-          - error
-          - success
-          - warning
-          - data_validation_warning
-          - extract_validation_warning
-          - skipped
-          - aborted
     etl_ETLProcessStepResponse:
       type: object
       properties:
@@ -292,12 +274,24 @@ components:
           - running
           - error
           - success
-    etl_ETLProcessStartResponse:
+    etl_ETLDayStageResponse:
       type: object
       properties:
-        processUuid:
+        stageCode:
           type: string
-          format: uuid
+          enum:
+          - abort
+          - start
+          - extract
+          - transform
+          - load
+          - check
+        startDateTime:
+          type: integer
+          format: int64
+        endDateTime:
+          type: integer
+          format: int64
     etl_ETLProcessStatusResponse:
       type: object
       properties:
@@ -333,6 +327,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/etl_ETLProcessLogResponse'
+    etl_ETLProcessStartResponse:
+      type: object
+      properties:
+        processUuid:
+          type: string
+          format: uuid
   securitySchemes:
     etl_bearerAuth:
       type: http
