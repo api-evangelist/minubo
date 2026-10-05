@@ -1,0 +1,12 @@
+{
+ "url": "https://api.minubo.com/docs/openapi-merged.json",
+ "requested_url": "https://api.minubo.com/docs/openapi-merged.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 28515,
+ "sha256": "2b9a44537d89465d33bf3ef9dee988752b6c6bfdcac351a8b76d596daae92214",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
