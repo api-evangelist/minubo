@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/minubo/integrations
+- https://n8n.io/integrations/minubo/
+- https://composio.dev/toolkits/minubo
+- https://monid.ai/tools/minubo
+checked:
+- https://composio.dev/toolkits/minubo
+- https://monid.ai/tools/minubo
+- https://n8n.io/integrations/minubo/
+- https://zapier.com/apps/minubo/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
