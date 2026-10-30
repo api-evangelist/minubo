@@ -64,6 +64,137 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Minubo is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Minubo is a German business-intelligence platform for e-commerce and retail that integrates, models, and contextualizes commerce data — orders, products, customers, and suppliers — into AI Insights, Profit Management, reporting, and a supplier portal. Minubo also exposes a public REST API (Auth, ETL, and Data services) so tenants can authenticate with a JWT, trigger and monitor data loads, discover their queryable schema, and run queries against their modeled commerce data, plus connectors to tools like Power BI, Superset, n8n, and LLMs.
 
-Backed by: seedcamp — http://minubo.com
+**Areas:** Company · E-Commerce · Business Intelligence · Analytics · Retail · Data · ETL · Reporting
+
+## Minubo on APIs.io
+
+Everything profiled for Minubo is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/minubo/](https://apis.io/providers/minubo/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [Minubo Auth API](https://apis.io/apis/minubo/minubo-auth-api/) — Auth endpoints
+- [Minubo Data API](https://apis.io/apis/minubo/minubo-data-api/) — Data endpoints
+- [Minubo ETL API](https://apis.io/apis/minubo/minubo-etl-api/) — ETL endpoints
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (2)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Query Minubo commerce data](https://apis.io/arazzos/minubo/minubo-query-commerce-data/)
+- [Trigger a Minubo ETL run and monitor it](https://apis.io/arazzos/minubo/minubo-trigger-etl-and-monitor/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [minubo](https://apis.io/servers/minubo/minubo/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Minubo Agentic Access](https://apis.io/agentic-access/minubo/minubo-agentic-access/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Minubo Auth API](https://apis.io/collections/minubo/open-minubo-auth-api/)
+- [Minubo Auth Data API](https://apis.io/collections/minubo/open-minubo-data-api/)
+- [Minubo Auth ETL API](https://apis.io/collections/minubo/open-minubo-etl-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Minubo Api Overlay](https://apis.io/overlays/minubo/minubo-api-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Minubo Authentication](https://apis.io/security/minubo/minubo-authentication/)
+- [Minubo Domain Security](https://apis.io/security/minubo/minubo-domain-security/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Minubo Rate Limits](https://apis.io/rate-limits/minubo/minubo-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.minubo.com/)
+- [Documentation](https://api.minubo.com/docs)
+- [Getting started](https://api.minubo.com/docs)
+- [API reference](https://api.minubo.com/docs)
+- [Pricing](https://www.minubo.com/de/preise)
+- [Sign up](https://app.minubo.com)
+- [Support](https://minubo.atlassian.net/servicedesk/customer/portals)
+- [Blog](https://blog.minubo.com/de/ecommerce-insights)
+- [Terms of service](https://www.minubo.com/de-de/legal/agb)
+- [Privacy policy](https://www.minubo.com/de-de/legal/datenschutzbedingungen)
+- [Status](https://status.minubo.com)
+
+## API Evangelist rating
+
+**Kin Score 46.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 48.2 |
+| Contract governance | 4.5 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 44.7 |
+
+**Agent readiness 28.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/minubo/](https://apis.io/providers/minubo/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Minubo: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/minubo/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
